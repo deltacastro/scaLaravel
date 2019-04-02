@@ -21,5 +21,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/calendario', 'GeneralController@getCalendarioV')->name('get.calendario');
+    Route::get('/calendarioList', 'GeneralController@getCalendarioList')->name('get.calendarioList');
+    Route::delete('/calendarioEliminar/{calendario}', 'GeneralController@postCalendarioEliminar')->name('post.calendarioEliminar');
     Route::post('/calendario', 'GeneralController@postCalendarioV')->name('post.calendario');
+    Route::post('/folio', 'GeneralController@postFolio')->name('post.folio');
 });
