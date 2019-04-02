@@ -18,3 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+    Route::get('/calendario', 'GeneralController@getCalendarioV')->name('get.calendario');
+    Route::post('/calendario', 'GeneralController@postCalendarioV')->name('post.calendario');
+});
