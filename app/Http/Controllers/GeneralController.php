@@ -45,9 +45,9 @@ class GeneralController extends Controller
         );
     }
 
-    public function postCalendarioEliminar (Request $request)
+    public function postCalendarioEliminar (Request $request, Calendario $calendario)
     {
-        dd($request->all());
+        $result = $calendario->eliminar();
         $calendarioAll = $this->calendarioM->getAll();
         $view = view('lists._calendarioList', compact('calendarioAll'))->render(); 
         return response()->json(

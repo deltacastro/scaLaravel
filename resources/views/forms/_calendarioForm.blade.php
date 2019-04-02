@@ -90,7 +90,14 @@
                 console.log(form);
                 let method = 'POST';
                 let action = form.action;
-                let data = new FormData(form);
+                let _token = $('[name="_token"]').val();
+                let _method = $('[name="_method"]').val();
+                console.log(_token);
+                
+                let data = {
+                    _token: _token,
+                    _method: _method
+                };
                 ajax(method, action, data);
             });
         });
