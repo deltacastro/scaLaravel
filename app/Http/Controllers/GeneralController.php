@@ -130,6 +130,8 @@ class GeneralController extends Controller
             $extra = '';
             $evidencia = '';
             $registro_id = $request->get('registro_id');
+            $municipio_id = $this->registroM->find($registro_id)->municipio_id;
+            $municipioNombre = $this->municipioM->find($municipio_id)->nombre;
             $folio = $this->registroM->find($registro_id)->folio; 
             if ($request->file('entradaSalida') !==null) {
                 $tipo_id = $listTipoEvi['entrada y salida'];
@@ -147,7 +149,7 @@ class GeneralController extends Controller
 
             foreach ($files as $key => $file) {
                 $path = $file->store(
-                    'evidencias/'. "$folio/" . $extra .'-'.date('y-m-d:h:m:s'),
+                    "evidencias/$municipioNombre/". "$folio/$registro_id/" . $extra .'-'.date('y-m-d:h:m:s'),
                     'public'
                 );
                 $nombre = $file->getClientOriginalName();
