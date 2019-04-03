@@ -49,9 +49,7 @@
             @include('layouts.navbar.materialize')
         @endauth
     </header>
-        <div class="progress">
-            <div id="determinate" class="determinate" style="width: 0%"></div>
-        </div>
+        
         @auth
             @include('layouts.navbar.aside')
         @endauth
@@ -73,6 +71,32 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        var delay = ( function() {
+            var timer = 0;
+            return function(callback, ms) {
+                clearTimeout (timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();
+        $(document).ajaxStart(function() {
+                let determinate = document.getElementById('determinate');
+                determinate.style.width = '50%'
+            })
+            .ajaxStop(function() {
+                let determinate = document.getElementById('determinate');
+                determinate.style.width = '100%'
+                delay(function(){
+                    // determinate.hidden = true;
+                    determinate.style.width = '0%'
+                }, 500)
+            }).ajaxComplete(function() {
+                let determinate = document.getElementById('determinate');
+                determinate.style.width = '100%'
+                delay(function(){
+                    // determinate.hidden = true;
+                    determinate.style.width = '0%'
+                }, 500)
+            });
     </script>
     @yield('javascript')
 </body>

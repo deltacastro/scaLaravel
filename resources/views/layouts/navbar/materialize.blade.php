@@ -12,5 +12,10 @@
                 </li>
             </ul>
         </div>
+        <div class="navbar-fixed">
+            <div class="progress">
+                <div id="determinate" class="determinate" style="width: 0%"></div>
+            </div>
+        </div>
     </nav>
 </div>
