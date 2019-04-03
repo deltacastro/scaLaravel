@@ -13,6 +13,7 @@ class CreateMunicipiosTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('municipios');
         if ( !Schema::hasTable('municipios') ) {
             Schema::create('municipios', function (Blueprint $table) {
                 $table->increments('id');

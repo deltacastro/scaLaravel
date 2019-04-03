@@ -32,8 +32,19 @@
                         <input type="number" id="thoras" name="totalHoras">
                         <label for="totalHoras">Total de horas</label>
                     </div>
-                    <input type="date" name="fechaInicio" id="">
-                    <input type="date" name="fechaFin" id="">
+                    <div class="input-field col s12">
+                        <input type="date" name="fechaInicio" id="">
+                        <input type="date" name="fechaFin" id="">
+                    </div>
+                    <div class="input-field col s12">
+                        <select>
+                            <option value="" disabled selected>Elige una opción</option>
+                            @foreach ($municipios as $municipio)
+                                <option value="{{ $municipio->id_municipio }}"->$municipio->nombre</option>
+                            @endforeach
+                        </select>
+                        <label>Municipio</label>
+                    </div>
                     <input type="text" name="registro_id" hidden>
                     <a data-action="{{ route("post.folio") }}" id="guardarRegistro" class="btn-small green white-text right">
                         <i class="large material-icons">check</i>
@@ -149,6 +160,7 @@
 
         $(document).ready(function () {
             $('ul[data-img]').hide();
+            $('select').formSelect();
             $('.guardar').on('click', function() {
                 let targetId = $(this).data('target');
                 console.log(targetId);
