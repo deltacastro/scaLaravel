@@ -39,17 +39,17 @@
                             <td>Centla</td>
                             <td>
                                 @if ($data->checkCalendario() > 0)
-                                    <a target="__blank" href="#"><i class="material-icons">visibility</i></a>    
+                                    <a target="__blank" href="{{ route('get.listImg', ['registro' => $data, 'tipo' => 1]) }}"><i class="material-icons">visibility</i></a>    
                                 @endif
                             </td>
                             <td>
                                 @if ($data->checkReporte() > 0)
-                                    <a target="__blank" href="#"><i class="material-icons">visibility</i></a>    
+                                    <a target="__blank" href="{{ route('get.listImg', ['registro' => $data, 'tipo' => 2]) }}"><i class="material-icons">visibility</i></a>
                                 @endif
                             </td>
                             <td>
                                 @if ($data->checkGps() > 0)
-                                    <a target="__blank" href="#"><i class="material-icons">visibility</i></a>    
+                                    <a target="__blank" href="{{ route('get.listImg', ['registro' => $data, 'tipo' => 3]) }}"><i class="material-icons">visibility</i></a>
                                 @endif
                             </td>
                             <td><a target="__blank" href="#"><i class="material-icons">edit</i></a></td>

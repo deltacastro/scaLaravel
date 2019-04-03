@@ -24,6 +24,13 @@ class GeneralController extends Controller
         return view('admin.index', compact('modelList'));
     }
 
+    public function listImg(Registro $registro, $tipo)
+    {
+        $evidencias = $registro->evidencias->where('tipo_id', $tipo);
+        $title = $this->tem->find($tipo)->nombre;
+        return view('admin._listImg', compact('evidencias', 'title'));
+    }
+
     public function getCalendarioV ()
     {
         return view('forms._calendarioForm');

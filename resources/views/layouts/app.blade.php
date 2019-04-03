@@ -33,11 +33,6 @@
             padding: 20px !important;
         }
 
-        img {
-            -webkit-filter: opacity(.1);
-            filter: opacity(.1);
-            animation-delay: .5s;
-        }
         #table_id_wrapper {
             margin-top: 5%;
         }
