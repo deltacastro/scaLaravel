@@ -20,9 +20,7 @@
             margin-top: 5%;
         }
 
-        .container {
-            width: 90%;
-        }
+        
     </style>
     @yield('styles')
 </head>
