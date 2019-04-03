@@ -7,13 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Registro extends Model
 {
     protected $table = 'registros';
-    protected $fillable = ['folio', 'totalHoras', 'fechaInicio', 'fechaFin'];
+    protected $fillable = ['folio', 'totalHoras', 'fechaInicio', 'fechaFin', 'municipio_id'];
 
     //RELATIONSHIPS
 
     public function evidencias()
     {
         return $this->hasMany('App\Evidencia', 'registro_id', 'id');
+    }
+
+    public function municipio()
+    {
+        return $this->belongsTo('App\Municipio', 'municipio_id');
     }
 
     //ACCESORS

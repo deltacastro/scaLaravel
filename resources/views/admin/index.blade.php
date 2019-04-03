@@ -36,7 +36,7 @@
                             <td>{{ $data->folio }}</td>
                             <td>{{ $data->fechaInicio }} - {{ $data->fechaFin }}</td>
                             <td>{{ $data->totalHoras }}</td>
-                            <td>Centla</td>
+                            <td>{{ $data->municipio->nombre }}</td>
                             <td>
                                 @if ($data->checkCalendario() > 0)
                                     <a target="__blank" href="{{ route('get.listImg', ['registro' => $data, 'tipo' => 1]) }}"><i class="material-icons">visibility</i></a>    
