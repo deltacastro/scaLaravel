@@ -13,11 +13,13 @@ class CreateMunicipiosTable extends Migration
      */
     public function up()
     {
-        Schema::create('municipios', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nombre');
-            $table->timestamps();
-        });
+        if ( !Schema::hasTable('municipios') ) {
+            Schema::create('municipios', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('nombre');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

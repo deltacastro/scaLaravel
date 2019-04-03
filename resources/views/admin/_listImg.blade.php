@@ -27,7 +27,7 @@
                 @forelse ($evidencias as $evidencia)
                     <img class="responsive-img" src="{{ asset('storage/' . $evidencia->path) }}" alt="">
                 @empty
-                    no hay ni madres!
+                    si vz esto, ago malo debe estar pasando!
                 @endforelse
                 <br>
             </div>
