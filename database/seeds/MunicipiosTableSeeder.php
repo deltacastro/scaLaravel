@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use App\Municipio;
 class MunicipiosTableSeeder extends Seeder
 {
     /**
@@ -32,18 +32,7 @@ class MunicipiosTableSeeder extends Seeder
         ];
 
         foreach ($datas as $key => $value) {
-            TipoEvidencia::firstOrCreate($value);
+            Municipio::firstOrCreate($value);
         }
     }
 }
-
-
-Balancán 	 de Domínguez 	010 	Jalpa de Méndez 	Jalpa de Méndez
-002 	Cárdenas 	Heroica Cárdenas 	011 	Jonuta 	Jonuta
-003 	Centla 	Frontera 	012 	Macuspana 	Macuspana
-004 	Centro 	Villahermosa 	013 	Nacajuca 	Nacajuca
-005 	Comalcalco 	Comalcalco 	014 	Paraíso 	Paraíso
-006 	Cunduacán 	Cunduacán 	015 	Tacotalpa 	Tacotalpa
-007 	Emiliano Zapata 	Emiliano Zapata 	016 	Teapa 	Teapa
-008 	Huimanguillo 	Huimanguillo 	017 	Tenosique 	Tenosique de Pino Suárez
-009 	Jalapa 	Jalapa 		
