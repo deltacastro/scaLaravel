@@ -25,10 +25,13 @@
                 <br>
                 <div class="divider"></div>
                 @forelse ($evidencias as $evidencia)
-                    @if ($evidencia->tipo == 'img')
+                    @if ($evidencia->extension == 'img')
                         <img class="responsive-img" src="{{ asset('storage/' . $evidencia->path) }}" alt="">
-                    @elseif ($evidencia->tipo == 'pdf')
+                    @elseif ($evidencia->extension == 'pdf')
                         <embed src="{{ asset('storage/' . $evidencia->path) }}" type="" width="100%">
+                    @else
+                            <label for="">No reconozco tu extension, pero te envio una liga</label>
+                        <a href=""></a>
                     @endif
                 @empty
                     si vz esto, ago malo debe estar pasando!
