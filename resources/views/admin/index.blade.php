@@ -1,6 +1,6 @@
 @extends('layouts.form.formGeneral')
 
-@section('style')
+@section('styles')
     <style>
         #table_id_wrapper {
             margin-top: 5%;
@@ -8,9 +8,7 @@
         }
 
         .container{
-            left: 300px;
-            right: 0px;
-            position: absolute;
+            margin-left: 300px;
         }
     </style>
 @endsection
@@ -18,7 +16,7 @@
 @section('form-body')
     <div class="container">
         <div class="row">
-            <div class="animated fadeIn delay-1s">
+            <div class="col offset-s5 offset-m4 offset-l2 offset-xl1 s7 m8 l10 xl11 animated fadeIn delay-1s">
                 <table id="table_id" class="display cell-border">
                     <thead>
                         <tr>
