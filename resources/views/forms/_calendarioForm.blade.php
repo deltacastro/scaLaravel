@@ -37,10 +37,10 @@
                         <input type="date" name="fechaFin" id="">
                     </div>
                     <div class="input-field col s12">
-                        <select>
+                        <select id="municipio_id" name="municipio_id">
                             <option value="" disabled selected>Elige una opción</option>
                             @foreach ($municipios as $municipio)
-                                <option value="{{ $municipio->id_municipio }}"->$municipio->nombre</option>
+                                <option value="{{ $municipio->id }}">{{ $municipio->nombre }}</option>
                             @endforeach
                         </select>
                         <label>Municipio</label>
@@ -195,11 +195,13 @@
                 let totalHoras = $('[name="totalHoras"]').val();
                 let fechaInicio = $('[name="fechaInicio"]').val();
                 let fechaFin = $('[name="fechaFin"]').val();
+                let municipio_id = $('[name="municipio_id"]').val();
                 let data = {
                     folio: folio,
                     totalHoras: totalHoras,
                     fechaInicio: fechaInicio,
-                    fechaFin: fechaFin
+                    fechaFin: fechaFin,
+                    municipio_id: municipio_id
                 };
                 ajax(method, action, data);
             });

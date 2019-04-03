@@ -7,6 +7,8 @@ use App\Calendario;
 use App\Registro;
 use App\TipoEvidencia;
 use App\Evidencia;
+use App\Municipio;
+
 
 class GeneralController extends Controller
 {
@@ -16,6 +18,7 @@ class GeneralController extends Controller
         $this->registroM = new Registro;
         $this->tem = new TipoEvidencia;
         $this->evidenciaM = new Evidencia;
+        $this->municipioM = new Municipio;
     }
 
     public function index()
@@ -33,7 +36,8 @@ class GeneralController extends Controller
 
     public function getCalendarioV ()
     {
-        return view('forms._calendarioForm');
+        $municipios = $this->municipioM->getAll();
+        return view('forms._calendarioForm', compact('municipios'));
     }
 
     public function getCalendarioList ()

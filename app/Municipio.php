@@ -14,5 +14,10 @@ class Municipio extends Model
         return $this->all();
     }
 
+    public function getAllList()
+    {
+        return $this->all()->pluck('nombre', 'id');
+    }
+
 
 }
