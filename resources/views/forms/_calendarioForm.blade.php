@@ -50,61 +50,63 @@
                         <i class="large material-icons">check</i>
                     </a>
                 </div>                
-                <div class="row">
-                    <h5>Calendario</h5>
-                    <div class="divider"></div>
-                    <br>
-                    <div class="file-field input-field">
-                        <div class="btn-small">
-                            <span>Seleccione archivos</span>
-                            <input type="file" name="evidencia[calendario][]" id="calendario" accept="image/png, image/jpeg, application/pdf" multiple>
+                <div id="divHide" style="display:none;">
+                    <div class="row">
+                        <h5>Calendario</h5>
+                        <div class="divider"></div>
+                        <br>
+                        <div class="file-field input-field">
+                            <div class="btn-small">
+                                <span>Seleccione archivos</span>
+                                <input type="file" name="evidencia[calendario][]" id="calendario" accept="image/png, image/jpeg, application/pdf" multiple>
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
                         </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text">
-                        </div>
+                        <ul class="collection" data-img="calendario"></ul>
+                        <a data-action="{{ route("post.evidencia") }}" data-target="calendario" class="btn-small green white-text right guardar">
+                            <i class="large material-icons">check</i>
+                        </a>
                     </div>
-                    <ul class="collection" data-img="calendario"></ul>
-                    <a data-action="{{ route("post.evidencia") }}" data-target="calendario" class="btn-small green white-text right guardar">
-                        <i class="large material-icons">check</i>
-                    </a>
-                </div>
-                <br>
-                <div class="row">
-                    <h5>Reporte de entrada y salida</h5>
-                    <div class="divider"></div>
                     <br>
-                    <div class="file-field input-field">
-                        <div class="btn-small">
-                            <span>Seleccione archivos</span>
-                            <input type="file" name="evidencia[entradaSalida][]" id="entradaSalida" accept="image/png, image/jpeg, application/pdf" multiple>
+                    <div class="row">
+                        <h5>Reporte de entrada y salida</h5>
+                        <div class="divider"></div>
+                        <br>
+                        <div class="file-field input-field">
+                            <div class="btn-small">
+                                <span>Seleccione archivos</span>
+                                <input type="file" name="evidencia[entradaSalida][]" id="entradaSalida" accept="image/png, image/jpeg, application/pdf" multiple>
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
                         </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text">
-                        </div>
+                        <ul class="collection" data-img="entradaSalida"></ul>
+                        <a data-action="{{ route("post.evidencia") }}" data-target="entradaSalida" class="btn-small green white-text right guardar">
+                            <i class="large material-icons">check</i>
+                        </a>
                     </div>
-                    <ul class="collection" data-img="entradaSalida"></ul>
-                    <a data-action="{{ route("post.evidencia") }}" data-target="entradaSalida" class="btn-small green white-text right guardar">
-                        <i class="large material-icons">check</i>
-                    </a>
-                </div>
-                <br>
-                <div class="row">
-                    <h5>GPS</h5>
-                    <div class="divider"></div>
                     <br>
-                    <div class="file-field input-field">
-                        <div class="btn-small">
-                            <span>Seleccione archivos</span>
-                            <input name="evidencia[gps][]" type="file" id="gps" accept="image/png, image/jpeg, application/pdf" multiple>
+                    <div class="row">
+                        <h5>GPS</h5>
+                        <div class="divider"></div>
+                        <br>
+                        <div class="file-field input-field">
+                            <div class="btn-small">
+                                <span>Seleccione archivos</span>
+                                <input name="evidencia[gps][]" type="file" id="gps" accept="image/png, image/jpeg, application/pdf" multiple>
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
                         </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text">
-                        </div>
+                        <ul class="collection" data-img="gps"></ul>
+                        <a data-action="{{ route("post.evidencia") }}" data-target="gps" class="btn-small green white-text right guardar">
+                            <i class="large material-icons">check</i>
+                        </a>
                     </div>
-                    <ul class="collection" data-img="gps"></ul>
-                    <a data-action="{{ route("post.evidencia") }}" data-target="gps" class="btn-small green white-text right guardar">
-                        <i class="large material-icons">check</i>
-                    </a>
                 </div>
             </div>
         </div>
@@ -153,6 +155,8 @@
                         $( '#calendarioList' ).html( response.view );
                     } else if (response.type == 'fk') {
                         $( `[name="${response.name}"]` ).val(response.value);
+                        $("#divHide").show();
+                        $('#guardarRegistro').attr('disabled', 'disabled');
                     }
                 }
             });
