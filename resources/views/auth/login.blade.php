@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('style')
+@section('styles')
     <style>
         .container {
             margin-top: 100px;
@@ -46,7 +46,7 @@
     </div>
     <div id="cont-logo" class="row center-align">
         <div class="col l4 offset-l4 m8 offset-m2 s12">
-            <img src="{% static 'images/logo.png' %}" alt="" class="responsive-img animated fadeIn">
+            <img src="{{ asset('/img/logo.png') }}" alt="" class="responsive-img animated fadeIn">
         </div>
     </div>
 </div>

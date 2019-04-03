@@ -1,6 +1,6 @@
 @extends('layouts.form.formGeneral')
 
-@section('style')
+@section('styles')
     <style>
         #cont {
             margin-top: 5%;

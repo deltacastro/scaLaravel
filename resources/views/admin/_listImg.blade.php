@@ -1,17 +1,21 @@
 @extends('layouts.form.formGeneral')
 
-@section('style')
+@section('styles')
     <style>
         #cont {
-            margin-top: 5%;
+            margin-top: 10%;
         }
 
         .container {
-            width: 60%;
+            left: 300px;
+            right: 0px;
+            position: absolute;
+            width: 40%;
         }
 
         .responsive-img{
-            width: 50% !important;
+            width: 100% !important;
+            margin-bottom: 20px;
         }
     </style>
 @endsection
@@ -19,11 +23,12 @@
 @section('form-body')
 <div class="container">
     <div class="row">
-        <div class="col offset-l4 l8 animated fadeIn delay-1s" id="cont">
+        <div class="animated fadeIn delay-1s" id="cont">
             <div class="row">
                 <h5>{{ $title }}</h5>
                 <br>
                 <div class="divider"></div>
+                <br>
                 @forelse ($evidencias as $evidencia)
                     @if ($evidencia->extension == 'pdf')
                         <embed height="400px" src="{{ asset('storage/' . $evidencia->path) }}" type="" width="100%">
