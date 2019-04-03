@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Calendario;
 use App\Registro;
+use App\TipoEvidencia;
+use App\Evidencia;
 
 class GeneralController extends Controller
 {
@@ -12,6 +14,8 @@ class GeneralController extends Controller
     {
         $this->calendarioM = new Calendario;
         $this->registroM = new Registro;
+        $this->tem = new TipoEvidencia;
+        $this->evidenciaM = new Evidencia;
     }
 
     public function getCalendarioV ()
@@ -69,6 +73,52 @@ class GeneralController extends Controller
                 'value' => $registro->id
             ],
             200);
+    }
+
+    public function postEvidencia (Request $request)
+    {
+        $listTipoEvi = $this->tem->all()->pluck('id', 'nombre')->toArray();
+        $tipo_id = '';
+        $files = '';
+        $extra = '';
+        $evidencia = '';
+        $registro_id = $request->get('registro_id');
+        $folio = $this->registroM->find($registro_id)->folio; 
+        if ($request->file('entradaSalida') !==null) {
+            $tipo_id = $listTipoEvi['entrada y salida'];
+            $files = $request->file('entradaSalida');
+            $extra = 'entradaSalida';
+        } else if ($request->file('gps') !==null) {
+            $tipo_id = $listTipoEvi['gps'];
+            $files = $request->file('gps');
+            $extra = 'gps';
+        }
+
+        foreach ($files as $key => $file) {
+            $path = $file->store(
+                'evidencias/'. "$folio/" . $extra .'-'.date('y-m-d:h:m:s'),
+                'public'
+            );
+            $nombre = $file->getClientOriginalName();
+            $evidenciaM = new Evidencia;
+            $evidenciaM->registro_id = $registro_id;
+            $evidenciaM->tipo_id = $tipo_id;
+            $evidenciaM->path = $path;
+            $evidenciaM->nombre = $nombre;
+            $evidencia = $evidenciaM->save();
+        }
+
+        $evidenciasAll = $this->evidenciaM->getMy($registro_id, $tipo_id);
+
+        $view = view('lists._fileList', compact('evidenciasAll'))->render(); 
+        return response()->json(
+            [
+                'type' => 'view',
+                'view' => $view,
+                'class' => $extra
+            ],
+            200
+        );
     }
 
 }

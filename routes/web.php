@@ -25,4 +25,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::delete('/calendarioEliminar/{calendario}', 'GeneralController@postCalendarioEliminar')->name('post.calendarioEliminar');
     Route::post('/calendario', 'GeneralController@postCalendarioV')->name('post.calendario');
     Route::post('/folio', 'GeneralController@postFolio')->name('post.folio');
+    Route::post('/evidencias', 'GeneralController@postEvidencia')->name('post.evidencia');
 });

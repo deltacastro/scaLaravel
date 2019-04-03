@@ -14,16 +14,42 @@
     <br>
     <button data-action="{{ route("post.folio") }}" id="guardarRegistro">Guardar</button>
     <br>
-    <h2>Agendar</h2>
-    <input type="text" name="hora" placeholder="horas para la fecha">
-    <input type="date" name="fecha" id="">
-    <br>
-    <button data-action="{{ route("post.calendario") }}" data-actionGet="{{ route("get.calendarioList") }}" id="guardarAgenda">Guardar</button>
-    <br>
-    <div id="calendarioList">
+    <h2>Calendario</h2>
+    <select name="mes" id="">
+        <option >Enero</option>
+        <option >Febrero</option>
+        <option >Marzo</option>
+        <option >Abril</option>
+        <option >Mayo</option>
+        <option >Junio</option>
+        <option >Julio</option>
+        <option >Agosto</option>
+        <option >Septiembre</option>
+        <option >Octubre</option>
+        <option >Noviembre</option>
+        <option >Diciembre</option>
+    </select>
+    <select name="municipio" id="">
+        <option >Cardenas</option>
+        <option >Centro</option>
+        <option >Centla</option>
+        <option >Jonuta</option>
+        <option >Paraiso</option>
+        <option >Comalcalco</option>
+    </select>
+    <input type="file" name="evidencia[calendario]" id="">
+    <h2>Formato de Entrada y Salida</h2>
+    <input type="file" name="evidencia[entradaSalida][]" id="entradaSalida" multiple>
+    <button data-action="{{ route("post.evidencia") }}" data-target="entradaSalida" class="guardar">Guardar</button>
+    <div class="entradaSalida">
 
     </div>
+    <h2>GPS</h2>
+    <input type="file" name="evidencia[gps][]" id="gps" multiple>
+    <button data-action="{{ route("post.evidencia") }}" data-target="gps" class="guardar">Guardar</button>
+    <div class="gps">
 
+    </div>
 @endsection
 
 
@@ -42,6 +68,21 @@
             });
         }
 
+        let fileAjax = (formData) => {
+            $.ajax({
+                url: '{{ route("post.evidencia") }}',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: 'POST',
+                type: 'POST', // For jQuery < 1.9
+                success: function(data){
+                    $( `.${data.class}` ).html( data.view );
+                }
+            });
+        }
+
         let ajax = (method, action, data, callback, target) => {
             $.ajax({
                 type: method,
@@ -51,7 +92,6 @@
                     console.log(response);
                     
                     if (response.type == 'view') {
-                        alert('entro al view')
                         $( '#calendarioList' ).html( response.view );
                     } else if (response.type == 'fk') {
                         $( `[name="${response.name}"]` ).val(response.value);
@@ -59,7 +99,27 @@
                 }
             });
         }
+
         $(document).ready(function () {
+
+            $('.guardar').on('click', function() {
+                let targetId = $(this).data('target');
+                console.log(targetId);
+                let formData = new FormData();
+                let fileElem = document.getElementById(targetId);
+                let registro_id = $('[name="registro_id"]').val();
+                formData.append('registro_id', registro_id);
+                $.each(fileElem.files, function (indexInArray, valueOfElement) {      
+                    console.log(indexInArray);
+                    console.log(valueOfElement);
+                    
+                    
+                    formData.append(`${targetId}[${indexInArray}]`, valueOfElement);
+                });
+                fileAjax(formData);
+                
+            })
+
             $('#guardarAgenda').on('click', function () {
                 let method = 'POST';
                 let action = $(this).data('action');
