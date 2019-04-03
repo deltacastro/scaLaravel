@@ -32,9 +32,11 @@
                         <input type="number" id="thoras" name="totalHoras">
                         <label for="totalHoras">Total de horas</label>
                     </div>
+                    <input type="date" name="fechaInicio" id="">
+                    <input type="date" name="fechaFin" id="">
                     <input type="text" name="registro_id" hidden>
-                    <a class="btn-small green white-text right">
-                        <i data-action="{{ route("post.folio") }}" id="guardarRegistro" class="large material-icons">check</i>
+                    <a data-action="{{ route("post.folio") }}" id="guardarRegistro" class="btn-small green white-text right">
+                        <i class="large material-icons">check</i>
                     </a>
                 </div>                
                 <div class="row">
@@ -179,9 +181,13 @@
                 let action = $(this).data('action');
                 let folio = $('[name="folio"]').val();
                 let totalHoras = $('[name="totalHoras"]').val();
+                let fechaInicio = $('[name="fechaInicio"]').val();
+                let fechaFin = $('[name="fechaFin"]').val();
                 let data = {
                     folio: folio,
-                    totalHoras: totalHoras
+                    totalHoras: totalHoras,
+                    fechaInicio: fechaInicio,
+                    fechaFin: fechaFin
                 };
                 ajax(method, action, data);
             });

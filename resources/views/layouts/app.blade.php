@@ -50,9 +50,13 @@
 </head>
 <body>
     <header>
+        @auth
             @include('layouts.navbar.materialize')
+        @endauth
     </header>
-        @include('layouts.navbar.aside')
+        @auth
+            @include('layouts.navbar.aside')
+        @endauth
         @yield('content')
         {{-- <div id="app">
             @include('layouts.navbar.general')
