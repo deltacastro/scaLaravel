@@ -24,17 +24,25 @@
                     <h6>Folio y total de horas</h6>
                     <div class="divider"></div>
                     <br>
-                    <div class="input-field col l6">
-                        <input type="text" id="folio" name="folio">
-                        <label for="folio">Folio</label>
+                    <div class="row">
+                        <div class="input-field col l6">
+                            <input type="text" id="folio" name="folio">
+                            <label for="folio">Folio</label>
+                        </div>
+                        <div class="input-field col l6">
+                            <input type="number" id="thoras" name="totalHoras">
+                            <label for="totalHoras">Total de horas</label>
+                        </div>
                     </div>
-                    <div class="input-field col l6">
-                        <input type="number" id="thoras" name="totalHoras">
-                        <label for="totalHoras">Total de horas</label>
-                    </div>
-                    <div class="input-field col s12">
-                        <input type="date" name="fechaInicio" id="">
-                        <input type="date" name="fechaFin" id="">
+                    <div class="row">
+                        <div class="input-field col l6">
+                            <input type="text" id="fechaInicio" name="fechaInicio" class="datepicker">
+                            <label for="fechaInicio">Fecha inicio</label>
+                        </div>
+                        <div class="input-field col l6">
+                            <input type="text" id="fechaFin" name="fechaFin" class="datepicker">
+                            <label for="fechaInicio">Fecha fin</label>
+                        </div>
                     </div>
                     <div class="input-field col s12">
                         <select id="municipio_id" name="municipio_id">
@@ -163,6 +171,19 @@
         }
 
         $(document).ready(function () {
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                container: 'body',
+                i18n: {
+                    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthsShort: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+                    weekdays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    weekdaysShort: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    cancel: 'Cancelar',
+                    done: 'Elegir'
+                }
+            });
             $('ul[data-img]').hide();
             $('select').formSelect();
             $('.guardar').on('click', function() {
