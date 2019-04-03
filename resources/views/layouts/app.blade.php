@@ -11,18 +11,59 @@
     <title>{{ config('app.name', 'SCA') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 100px;
+        }
+
+        .cont-btn {
+            text-align: center;
+        }
+
+        .btn {
+            width: 100%;
+            animation-delay: 0.5s;
+        }
+
+        .col {
+            padding: 20px !important;
+        }
+
+        img {
+            -webkit-filter: opacity(.1);
+            filter: opacity(.1);
+            animation-delay: .5s;
+        }
+        #table_id_wrapper {
+            margin-top: 5%;
+        }
+
+        .container {
+            width: 90%;
+        }
+    </style>
+    @yield('styles')
 </head>
 <body>
-    <div id="app">
+    <header>
+            @include('layouts.navbar.materialize')
+    </header>
+        @include('layouts.navbar.aside')
+        @yield('content')
+        {{-- <div id="app">
             @include('layouts.navbar.general')
         <div>
             @yield('content')
         </div>
-    </div>
+    </div> --}}
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script type="text/javascript">
         $.ajaxSetup({
             headers: {

@@ -1,55 +1,102 @@
 @extends('layouts.form.formGeneral')
 
-@section('form-title')
-    <h1>Formulario</h1>
+@section('style')
+    <style>
+        #cont {
+            margin-top: 5%;
+        }
+
+        .container {
+            width: 60%;
+        }
+
+        .responsive-img{
+            width: 50% !important;
+        }
+    </style>
 @endsection
 
 @section('form-body')
+<div class="container">
+        <div class="row">
+            <div class="col offset-l4 l8 animated fadeIn delay-1s" id="cont">
+                <div class="row">
+                    <h6>Folio y total de horas</h6>
+                    <div class="divider"></div>
+                    <br>
+                    <div class="input-field col l6">
+                        <input type="text" id="folio" name="folio">
+                        <label for="folio">Folio</label>
+                    </div>
+                    <div class="input-field col l6">
+                        <input type="number" id="thoras" name="totalHoras">
+                        <label for="totalHoras">Total de horas</label>
+                    </div>
+                    <input type="text" name="registro_id" hidden>
+                    <a class="btn-small green white-text right">
+                        <i data-action="{{ route("post.folio") }}" id="guardarRegistro" class="large material-icons">check</i>
+                    </a>
+                </div>                
+                <div class="row">
+                    <h5>Calendario</h5>
+                    <div class="divider"></div>
+                    <br>
+                    <div class="file-field input-field">
+                        <div class="btn-small">
+                            <span>Seleccione archivos</span>
+                            <input type="file" id="calendario" accept="image/png, image/jpeg, application/pdf" multiple>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                    <ul class="collection" data-img="calendario"></ul>
+                    <a data-action="{{ route("post.evidencia") }}" data-target="gps" class="btn-small green white-text right guardar">
+                        <i class="large material-icons">check</i>
+                    </a>
+                </div>
+                <br>
+                <div class="row">
+                    <h5>Reporte de entrada y salida</h5>
+                    <div class="divider"></div>
+                    <br>
+                    <div class="file-field input-field">
+                        <div class="btn-small">
+                            <span>Seleccione archivos</span>
+                            <input type="file" name="evidencia[entradaSalida][]" id="entradaSalida" accept="image/png, image/jpeg, application/pdf" multiple>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                    <ul class="collection" data-img="entradaSalida"></ul>
+                    <a data-action="{{ route("post.evidencia") }}" data-target="entradaSalida" class="btn-small green white-text right guardar">
+                        <i class="large material-icons">check</i>
+                    </a>
+                </div>
+                <br>
+                <div class="row">
+                    <h5>GPS</h5>
+                    <div class="divider"></div>
+                    <br>
+                    <div class="file-field input-field">
+                        <div class="btn-small">
+                            <span>Seleccione archivos</span>
+                            <input name="evidencia[gps][]" type="file" id="gps" accept="image/png, image/jpeg, application/pdf" multiple>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                    <ul class="collection" data-img="gps"></ul>
+                    <a data-action="{{ route("post.evidencia") }}" data-target="gps" class="btn-small green white-text right guardar">
+                        <i class="large material-icons">check</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
     
-    <h2>Folios</h2>
-    <input type="text" name="folio" placeholder="ingresa folio">
-    <br>
-    <input type="text" name="totalHoras" placeholder="Total Horas">
-    <input type="text" name="registro_id">
-    <br>
-    <button data-action="{{ route("post.folio") }}" id="guardarRegistro">Guardar</button>
-    <br>
-    <h2>Calendario</h2>
-    <select name="mes" id="">
-        <option >Enero</option>
-        <option >Febrero</option>
-        <option >Marzo</option>
-        <option >Abril</option>
-        <option >Mayo</option>
-        <option >Junio</option>
-        <option >Julio</option>
-        <option >Agosto</option>
-        <option >Septiembre</option>
-        <option >Octubre</option>
-        <option >Noviembre</option>
-        <option >Diciembre</option>
-    </select>
-    <select name="municipio" id="">
-        <option >Cardenas</option>
-        <option >Centro</option>
-        <option >Centla</option>
-        <option >Jonuta</option>
-        <option >Paraiso</option>
-        <option >Comalcalco</option>
-    </select>
-    <input type="file" name="evidencia[calendario]" id="">
-    <h2>Formato de Entrada y Salida</h2>
-    <input type="file" name="evidencia[entradaSalida][]" id="entradaSalida" multiple>
-    <button data-action="{{ route("post.evidencia") }}" data-target="entradaSalida" class="guardar">Guardar</button>
-    <div class="entradaSalida">
-
-    </div>
-    <h2>GPS</h2>
-    <input type="file" name="evidencia[gps][]" id="gps" multiple>
-    <button data-action="{{ route("post.evidencia") }}" data-target="gps" class="guardar">Guardar</button>
-    <div class="gps">
-
-    </div>
 @endsection
 
 
@@ -59,7 +106,6 @@
 
 @section('javascript')
     <script>
-
         let getView = (url, target) => {
             
             $.get( url, function( data ) {
@@ -90,7 +136,6 @@
                 data: data,
                 success: function (response) {
                     console.log(response);
-                    
                     if (response.type == 'view') {
                         $( '#calendarioList' ).html( response.view );
                     } else if (response.type == 'fk') {
@@ -101,7 +146,7 @@
         }
 
         $(document).ready(function () {
-
+            $('ul[data-img]').hide();
             $('.guardar').on('click', function() {
                 let targetId = $(this).data('target');
                 console.log(targetId);
@@ -112,13 +157,10 @@
                 $.each(fileElem.files, function (indexInArray, valueOfElement) {      
                     console.log(indexInArray);
                     console.log(valueOfElement);
-                    
-                    
                     formData.append(`${targetId}[${indexInArray}]`, valueOfElement);
                 });
-                fileAjax(formData);
-                
-            })
+                fileAjax(formData); 
+            })  
 
             $('#guardarAgenda').on('click', function () {
                 let method = 'POST';
@@ -153,12 +195,23 @@
                 let _token = $('[name="_token"]').val();
                 let _method = $('[name="_method"]').val();
                 console.log(_token);
-                
                 let data = {
                     _token: _token,
                     _method: _method
                 };
                 ajax(method, action, data);
+            });
+            $('input[type="file"]').on('change', function(e){
+                var id = $(this).attr('id');
+                if(e.target.files.length === 0){
+                    $('ul[data-img='+id+']').hide();
+                }   
+                else{
+                    $('ul[data-img='+id+']').show().empty();
+                    for (var i = 0; i < e.target.files.length; i++) {
+                        $('ul[data-img='+id+']').append('<li class="collection-item">'+e.target.files[i].name+'</li>');
+                    }
+                }
             });
         });
     </script>
