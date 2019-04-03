@@ -1,5 +1,26 @@
 @extends('layouts.app')
 
+@section('style')
+    <style>
+        .container {
+            margin-top: 100px;
+        }
+
+        .cont-btn {
+            text-align: center;
+        }
+
+        .btn {
+            width: 100%;
+            animation-delay: 0.5s;
+        }
+
+        .col {
+            padding: 20px !important;
+        }
+    </style>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">

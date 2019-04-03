@@ -16,23 +16,6 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        .container {
-            margin-top: 100px;
-        }
-
-        .cont-btn {
-            text-align: center;
-        }
-
-        .btn {
-            width: 100%;
-            animation-delay: 0.5s;
-        }
-
-        .col {
-            padding: 20px !important;
-        }
-
         #table_id_wrapper {
             margin-top: 5%;
         }

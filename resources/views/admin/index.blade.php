@@ -8,7 +8,7 @@
         }
 
         .container{
-            width: 90%;
+            margin-left: 300px;
         }
     </style>
 @endsection
@@ -16,7 +16,7 @@
 @section('form-body')
     <div class="container">
         <div class="row">
-            <div class="col offset-l3 offset-xl1 xl12 l9 animated fadeIn delay-1s">
+            <div class="col offset-s5 offset-m4 offset-l2 offset-xl1 s7 m8 l10 xl12 animated fadeIn delay-1s">
                 <table id="table_id" class="display cell-border">
                     <thead>
                         <tr>
