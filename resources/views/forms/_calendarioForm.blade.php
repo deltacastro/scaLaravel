@@ -46,14 +46,14 @@
                     <div class="file-field input-field">
                         <div class="btn-small">
                             <span>Seleccione archivos</span>
-                            <input type="file" id="calendario" accept="image/png, image/jpeg, application/pdf" multiple>
+                            <input type="file" name="evidencia[calendario][]" id="calendario" accept="image/png, image/jpeg, application/pdf" multiple>
                         </div>
                         <div class="file-path-wrapper">
                             <input class="file-path validate" type="text">
                         </div>
                     </div>
                     <ul class="collection" data-img="calendario"></ul>
-                    <a data-action="{{ route("post.evidencia") }}" data-target="gps" class="btn-small green white-text right guardar">
+                    <a data-action="{{ route("post.evidencia") }}" data-target="calendario" class="btn-small green white-text right guardar">
                         <i class="large material-icons">check</i>
                     </a>
                 </div>

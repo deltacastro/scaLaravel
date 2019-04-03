@@ -7,9 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Registro extends Model
 {
     protected $table = 'registros';
-    protected $fillable = ['folio', 'totalHoras'];
+    protected $fillable = ['folio', 'totalHoras', 'fechaInicio', 'fechaFin'];
 
-        //RELATIONSHIPS
+    //RELATIONSHIPS
+
+    public function evidencias()
+    {
+        return $this->hasMany('App\Evidencia', 'registro_id', 'id');
+    }
 
     //ACCESORS
 
@@ -52,4 +57,20 @@ class Registro extends Model
     public function getAllList() {
         return $this->all()->pluck('correo');
     }
+
+    public function checkCalendario()
+    {
+        return $this->evidencias->where('tipo_id', 1)->count();
+    }
+    
+    public function checkReporte()
+    {
+        return $this->evidencias->where('tipo_id', 2)->count();
+    }
+    
+    public function checkGps()
+    {
+        return $this->evidencias->where('tipo_id', 3)->count();
+    }
+
 }

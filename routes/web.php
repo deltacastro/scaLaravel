@@ -20,6 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+    Route::get('/index', 'GeneralController@index')->name('get.index');
     Route::get('/calendario', 'GeneralController@getCalendarioV')->name('get.calendario');
     Route::get('/calendarioList', 'GeneralController@getCalendarioList')->name('get.calendarioList');
     Route::delete('/calendarioEliminar/{calendario}', 'GeneralController@postCalendarioEliminar')->name('post.calendarioEliminar');

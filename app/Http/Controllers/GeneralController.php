@@ -18,6 +18,12 @@ class GeneralController extends Controller
         $this->evidenciaM = new Evidencia;
     }
 
+    public function index()
+    {
+        $modelList = $this->registroM->getAll();
+        return view('admin.index', compact('modelList'));
+    }
+
     public function getCalendarioV ()
     {
         return view('forms._calendarioForm');
@@ -92,6 +98,10 @@ class GeneralController extends Controller
             $tipo_id = $listTipoEvi['gps'];
             $files = $request->file('gps');
             $extra = 'gps';
+        } else if ($request->file('calendario') !==null) {
+            $tipo_id = $listTipoEvi['calendario'];
+            $files = $request->file('calendario');
+            $extra = 'calendario';
         }
 
         foreach ($files as $key => $file) {

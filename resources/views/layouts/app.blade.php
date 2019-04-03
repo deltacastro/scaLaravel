@@ -54,6 +54,9 @@
             @include('layouts.navbar.materialize')
         @endauth
     </header>
+        <div class="progress">
+            <div id="determinate" class="determinate" style="width: 0%"></div>
+        </div>
         @auth
             @include('layouts.navbar.aside')
         @endauth
@@ -68,6 +71,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
         $.ajaxSetup({
             headers: {

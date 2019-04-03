@@ -13,7 +13,15 @@
         <li>
             <div class="divider"></div>
         </li>
-        <li><a class="waves-effect" href="{{ route('get.calendario') }}"><i class="material-icons">record_voice_over</i>Administrador
-                    perifoneo</a></li>
+        <li>
+            <a class="waves-effect" href="{{ route('get.index') }}"><i class="material-icons">record_voice_over</i>
+                Listado perifoneo
+            </a>
+        </li>
+        <li>
+            <a class="waves-effect" href="{{ route('get.calendario') }}"><i class="material-icons">record_voice_over</i>
+                Nuevo perifoneo
+            </a>
+        </li>
     </ul>
 </aside>
