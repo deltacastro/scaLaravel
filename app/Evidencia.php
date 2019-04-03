@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Evidencia extends Model
 {
     protected $table = 'evidencias';
-    protected $fillable = ['registro_id', 'tipo_id', 'path', 'nombre'];
+    protected $fillable = ['registro_id', 'tipo_id', 'path', 'nombre', 'extension'];
 
     //RELATIONSHIPS
 

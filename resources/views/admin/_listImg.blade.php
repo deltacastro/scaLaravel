@@ -25,7 +25,11 @@
                 <br>
                 <div class="divider"></div>
                 @forelse ($evidencias as $evidencia)
-                    <img class="responsive-img" src="{{ asset('storage/' . $evidencia->path) }}" alt="">
+                    @if ($evidencia->tipo == 'img')
+                        <img class="responsive-img" src="{{ asset('storage/' . $evidencia->path) }}" alt="">
+                    @elseif ($evidencia->tipo == 'pdf')
+                        <embed src="{{ asset('storage/' . $evidencia->path) }}" type="" width="100%">
+                    @endif
                 @empty
                     si vz esto, ago malo debe estar pasando!
                 @endforelse

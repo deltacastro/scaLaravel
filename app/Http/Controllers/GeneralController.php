@@ -121,11 +121,13 @@ class GeneralController extends Controller
                 'public'
             );
             $nombre = $file->getClientOriginalName();
+            $extension = $file->->getClientOriginalExtension();
             $evidenciaM = new Evidencia;
             $evidenciaM->registro_id = $registro_id;
             $evidenciaM->tipo_id = $tipo_id;
             $evidenciaM->path = $path;
             $evidenciaM->nombre = $nombre;
+            $evidenciaM->extension = $extension;
             $evidencia = $evidenciaM->save();
         }
 
