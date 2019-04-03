@@ -52,7 +52,11 @@
                                     <a target="__blank" href="{{ route('get.listImg', ['registro' => $data, 'tipo' => 3]) }}"><i class="material-icons">visibility</i></a>
                                 @endif
                             </td>
-                            <td><a target="__blank" href="#"><i class="material-icons">edit</i></a></td>
+                            <td>
+                                @if (Auth::user()->tipoUsuario == 1)
+                                    <a target="__blank" href="#"><i class="material-icons">edit</i></a>
+                                @endif
+                            </td>
                         </tr> 
                         @endforeach
                     </tbody>

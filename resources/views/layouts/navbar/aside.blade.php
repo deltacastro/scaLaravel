@@ -19,9 +19,11 @@
             </a>
         </li>
         <li>
-            <a class="waves-effect" href="{{ route('get.calendario') }}"><i class="material-icons">record_voice_over</i>
-                Nuevo perifoneo
-            </a>
+            @if (Auth::user()->tipoUsuario == 1)
+                <a class="waves-effect" href="{{ route('get.calendario') }}"><i class="material-icons">record_voice_over</i>
+                    Nuevo perifoneo
+                </a>
+            @endif
         </li>
     </ul>
 </aside>
