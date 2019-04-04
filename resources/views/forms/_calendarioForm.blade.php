@@ -21,7 +21,8 @@
         <div class="row">
             <div class="col offset-l4 l8 animated fadeIn delay-1s" id="cont">
                 <div class="row">
-                    <h6>Folio y total de horas</h6>
+                    <h5>Folio y total de horas</h5>
+                    <br>
                     <div class="divider"></div>
                     <br>
                     <div class="row">
