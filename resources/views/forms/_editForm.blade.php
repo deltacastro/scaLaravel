@@ -27,6 +27,7 @@
                 <h5>Editar</h5>
                 <br>
                 <div class="divider"></div>
+                <input type="text" name="registro_id" value="{{ $registro->id }}">
                 <br> {{--
                 <div class="row">
                     <div class="input-field col l6">
@@ -92,31 +93,32 @@
                                 </a>
                             <br>
                             <br>
-                            
-                            @forelse ($evidenciasCal as $eviCal)
-                                <div class="card">
-                                    <div class="card-image">
-                                        @if ($eviCal->extension == 'pdf')
-                                            <embed height="400px" src="{{ asset('storage/' . $eviCal->path) }}" type="" width="100%">
-                                        @else
-                                            <img src="{{ asset('storage/' . $eviCal->path) }}" alt="">
-                                        @endif
-                                        <span class="card-title">{{ $eviCal->nombre }}</span>
+                            <div class="loadListcalendario">
+                                @forelse ($evidenciasCal as $eviCal)
+                                    <div class="card">
+                                        <div class="card-image">
+                                            @if ($eviCal->extension == 'pdf')
+                                                <embed height="400px" src="{{ asset('storage/' . $eviCal->path) }}" type="" width="100%">
+                                            @else
+                                                <img src="{{ asset('storage/' . $eviCal->path) }}" alt="">
+                                            @endif
+                                            <span class="card-title">{{ $eviCal->nombre }}</span>
+                                        </div>
+                                        <div class="card-content">
+                                            <p>{{ $eviCal->nombre }}</p>
+                                            <p>{{ $eviCal->fecha }}</p>
+                                        </div>
+                                        <div class="card-action right-align">
+                                            <a href="#" class="btn red white-text guardar" data-action="" data-target="calendario">
+                                                <i class="large material-icons">delete_forever</i>
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div class="card-content">
-                                        <p>{{ $eviCal->nombre }}</p>
-                                        <p>{{ $eviCal->fecha }}</p>
-                                    </div>
-                                    <div class="card-action right-align">
-                                        <a href="#" class="btn red white-text guardar" data-action="" data-target="calendario">
-                                            <i class="large material-icons">delete_forever</i>
-                                        </a>
-                                    </div>
-                                </div>
-                            @empty
-                                si vz esto, ago malo debe estar pasando!
-                                <a src="{{ asset('storage/' . $eviCal->path) }}">Descargame</a>
-                            @endforelse
+                                @empty
+                                    Sin registros
+                                    
+                                @endforelse
+                            </div>
                         </div>
                     </li>
                     <li>
@@ -146,30 +148,31 @@
                                 </a>
                             <br>
                             <br>
-                            @forelse ($entradasSalidas as $entsal)
-                                <div class="card">
-                                    <div class="card-image">
-                                        @if ($entsal->extension == 'pdf')
-                                            <embed height="400px" src="{{ asset('storage/' . $entsal->path) }}" type="" width="100%">
-                                        @else
-                                            <img src="{{ asset('storage/' . $entsal->path) }}" alt="">
-                                        @endif
-                                        <span class="card-title">{{ $entsal->nombre }}</span>
+                            <div class="loadListentradaSalida">
+                                @forelse ($entradasSalidas as $entsal)
+                                    <div class="card">
+                                        <div class="card-image">
+                                            @if ($entsal->extension == 'pdf')
+                                                <embed height="400px" src="{{ asset('storage/' . $entsal->path) }}" type="" width="100%">
+                                            @else
+                                                <img src="{{ asset('storage/' . $entsal->path) }}" alt="">
+                                            @endif
+                                            <span class="card-title">{{ $entsal->nombre }}</span>
+                                        </div>
+                                        <div class="card-content">
+                                            <p>{{ $entsal->nombre }}</p>
+                                            <p>{{ $entsal->fecha }}</p>
+                                        </div>
+                                        <div class="card-action right-align">
+                                            <a href="#" class="btn red white-text guardar" data-action="" data-target="entradaSalida">
+                                                <i class="large material-icons">delete_forever</i>
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div class="card-content">
-                                        <p>{{ $entsal->nombre }}</p>
-                                        <p>{{ $entsal->fecha }}</p>
-                                    </div>
-                                    <div class="card-action right-align">
-                                        <a href="#" class="btn red white-text guardar" data-action="" data-target="entradaSalida">
-                                            <i class="large material-icons">delete_forever</i>
-                                        </a>
-                                    </div>
-                                </div>
-                            @empty
-                                si vz esto, ago malo debe estar pasando!
-                                <a src="{{ asset('storage/' . $entsal->path) }}">Descargame</a>
-                            @endforelse
+                                @empty
+                                    Sin registros
+                                @endforelse
+                            </div>
                         </div>
                     </li>
                     <li>
@@ -199,30 +202,31 @@
                                 </a>
                             <br>
                             <br>
-                            @forelse ($gpss as $gps)
-                                <div class="card">
-                                    <div class="card-image">
-                                        @if ($gps->extension == 'pdf')
-                                            <embed height="400px" src="{{ asset('storage/' . $gps->path) }}" type="" width="100%">
-                                        @else
-                                            <img src="{{ asset('storage/' . $gps->path) }}" alt="">
-                                        @endif
-                                        <span class="card-title">{{ $gps->nombre }}</span>
+                            <div class="loadListgps">
+                                @forelse ($gpss as $gps)
+                                    <div class="card">
+                                        <div class="card-image">
+                                            @if ($gps->extension == 'pdf')
+                                                <embed height="400px" src="{{ asset('storage/' . $gps->path) }}" type="" width="100%">
+                                            @else
+                                                <img src="{{ asset('storage/' . $gps->path) }}" alt="">
+                                            @endif
+                                            <span class="card-title">{{ $gps->nombre }}</span>
+                                        </div>
+                                        <div class="card-content">
+                                            <p>{{ $gps->nombre }}</p>
+                                            <p>{{ $gps->fecha }}</p>
+                                        </div>
+                                        <div class="card-action right-align">
+                                            <a href="#" class="btn red white-text guardar" data-action="" data-target="gps">
+                                                <i class="large material-icons">delete_forever</i>
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div class="card-content">
-                                        <p>{{ $gps->nombre }}</p>
-                                        <p>{{ $gps->fecha }}</p>
-                                    </div>
-                                    <div class="card-action right-align">
-                                        <a href="#" class="btn red white-text guardar" data-action="" data-target="gps">
-                                            <i class="large material-icons">delete_forever</i>
-                                        </a>
-                                    </div>
-                                </div>
-                            @empty
-                                si vz esto, ago malo debe estar pasando!
-                                <a src="{{ asset('storage/' . $gps->path) }}">Descargame</a>
-                            @endforelse
+                                @empty
+                                    Sin registros
+                                @endforelse
+                            </div>
                         </div>
                     </li>
                 </ul>

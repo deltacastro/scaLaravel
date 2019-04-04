@@ -66,6 +66,69 @@ class GeneralController extends Controller
         }
     }
 
+    public function updateRegistro (Request $request, Registro $registro)
+    {
+        if (Auth::user()->tipoUsuario == 1) {
+            $fechas = '';
+            $listTipoEvi = $this->tem->all()->pluck('id', 'nombre')->toArray();
+            $tipo_id = '';
+            $files = '';
+            $extra = '';
+            $evidencia = '';
+            $registro_id = $request->get('registro_id');
+            $municipio_id = $this->registroM->find($registro_id)->municipio_id;
+            $municipioNombre = $this->municipioM->find($municipio_id)->nombre;
+            $folio = $this->registroM->find($registro_id)->folio; 
+            if ($request->file('entradaSalida') !==null) {
+                $tipo_id = $listTipoEvi['entrada y salida'];
+                $files = $request->file('entradaSalida');
+                $extra = 'entradaSalida';
+                $fechas = $request->get('fecha')[$extra];
+            } else if ($request->file('gps') !==null) {
+                $tipo_id = $listTipoEvi['gps'];
+                $files = $request->file('gps');
+                $extra = 'gps';
+                $fechas = $request->get('fecha')[$extra];
+            } else if ($request->file('calendario') !==null) {
+                $tipo_id = $listTipoEvi['calendario'];
+                $files = $request->file('calendario');
+                $extra = 'calendario';
+                $fechas = $request->get('fecha')[$extra];
+            }
+
+            foreach ($files as $key => $file) {
+                $path = $file->store(
+                    "evidencias/$municipioNombre/". "$folio/$registro_id/" . $extra .'-'.date('y-m-d:h:m:s'),
+                    'public'
+                );
+                $nombre = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension();
+                $evidenciaM = new Evidencia;
+                $evidenciaM->registro_id = $registro_id;
+                $evidenciaM->tipo_id = $tipo_id;
+                $evidenciaM->path = $path;
+                $evidenciaM->nombre = $nombre;
+                $evidenciaM->extension = $extension;
+                $evidenciaM->fecha = $fechas[$key];
+                $evidencia = $evidenciaM->save();
+            }
+
+            $municipios = $this->municipioM->getAll();
+            $evidencias = $registro->evidencias->where('tipo_id', $tipo_id);
+            $view = view('lists._fileList', compact('evidencias'))->render(); 
+            return response()->json(
+                [
+                    'type' => 'view',
+                    'view' => $view,
+                    'class' => "loadList$extra"
+                ],
+                200
+            );
+        } else {
+            return redirect('home');
+        }
+    }
+
 
     public function getCalendarioList ()
     {
