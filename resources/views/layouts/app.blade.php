@@ -11,10 +11,10 @@
     <title>{{ config('app.name', 'SCA') }}</title>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('/css/materialize.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/dataTables.min.css') }}">
+    <link href="{{ asset('css/icon.css') }}" rel="stylesheet">
     <style>
         #table_id_wrapper {
             margin-top: 5%;
@@ -25,7 +25,6 @@
             height: 100%;
             width: 100%;
         }
-        
     </style>
     @yield('styles')
 </head>
@@ -49,9 +48,9 @@
     </div> --}}
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('/js/app.js') }}"></script>
+    <script src="{{ asset('/js/materialize.min.js') }}"></script>
+    <script src="{{ ('/js/dataTables.min.js') }}"></script>
     <script type="text/javascript">
         $(window).on('load', function(){
             $('#cover').fadeOut(1000);
