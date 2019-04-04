@@ -18,6 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/index', 'GeneralController@index')->name('get.index');
     Route::get('/mostrar-evidencias/{registro}/{tipo}', 'GeneralController@listImg')->name('get.listImg');

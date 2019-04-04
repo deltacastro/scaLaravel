@@ -27,7 +27,7 @@
                             {{-- <th>Total de horas</th> --}}
                             <th>Municipio</th>
                             <th>Calendario</th>
-                            <th>Reporte entrada y salida</th>
+                            <th>Reporte Entrada y Salida</th>
                             <th>GPS</th>
                             @if (Auth::user()->tipoUsuario == 1)
                                 <th>Opciones</th>    
