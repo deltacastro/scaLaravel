@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Calendario extends Model
+class TipoEvidencia extends Model
 {
-    protected $table = 'calendarios';
-    protected $fillable = ['registro_id', 'fecha', 'hora'];
+    protected $table = 'tiposEvidencias';
+    protected $fillable = ['nombre'];
 
         //RELATIONSHIPS
 

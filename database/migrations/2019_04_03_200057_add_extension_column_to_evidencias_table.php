@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCalendariosTable extends Migration
+class AddExtensionColumnToEvidenciasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateCalendariosTable extends Migration
      */
     public function up()
     {
-        Schema::create('calendarios', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('registro_id');
-            $table->date('fecha');
-            $table->integer('hora');
-            $table->timestamps();
+        Schema::table('evidencias', function (Blueprint $table) {
+            $table->string('extension', 100);
         });
     }
 
@@ -29,6 +25,8 @@ class CreateCalendariosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('calendarios');
+        Schema::table('evidencias', function (Blueprint $table) {
+            $table->dropColumn('extension');
+        });
     }
 }

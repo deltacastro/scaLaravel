@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Calendario extends Model
+class Evidencia extends Model
 {
-    protected $table = 'calendarios';
-    protected $fillable = ['registro_id', 'fecha', 'hora'];
+    protected $table = 'evidencias';
+    protected $fillable = ['registro_id', 'tipo_id', 'path', 'nombre', 'extension'];
 
-        //RELATIONSHIPS
+    //RELATIONSHIPS
 
     //ACCESORS
 
@@ -47,6 +47,10 @@ class Calendario extends Model
 
     public function getAll() {
         return $this->all();
+    }
+
+    public function getMy($folio_id, $tipo_id) {
+        return $this->where('registro_id', $folio_id)->where('tipo_id', $tipo_id)->get();
     }
 
     public function getAllList() {
