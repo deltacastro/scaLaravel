@@ -1,68 +1,52 @@
 @extends('layouts.app')
 
+@section('styles')
+    <style>
+        .container {
+            margin-top: 100px;
+        }
+
+        .cont-btn {
+            text-align: center;
+        }
+
+        .btn {
+            width: 100%;
+            animation-delay: 0.5s;
+        }
+
+        .col {
+            padding: 20px !important;
+        }
+    </style>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    Forgot Your Password?
-                                </a>
-                            </div>
-                        </div>
-                    </form>
+        <div class="col l4 offset-l4 m8 offset-m2 s12 z-depth-2 animated fadeIn fast white">
+            <h5 class="center-align">Inicio de sesión</h5>
+            <br>
+            <form method="post">
+                {{ csrf_field() }}
+                <div class="input-field">
+                    <label for="user">Usuario</label>
+                    <input type="text" name="email" id="user" autocomplete="off">
                 </div>
-            </div>
+                <div class="input-field">
+                    <label for="pass">Contraseña</label>
+                    <input type="password" name="password" id="pass">
+                </div>
+                <div class="cont-btn">
+                    <br>
+                    <input type="submit" class="btn center-align animated fadeIn" value="Ingresar">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="cont-logo" class="row center-align">
+        <div class="col l4 offset-l4 m8 offset-m2 s12">
+            <img src="{{ asset('/img/logo.png') }}" alt="" class="responsive-img animated fadeIn">
         </div>
     </div>
 </div>

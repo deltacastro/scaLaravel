@@ -3,16 +3,49 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use \DateTime;
 
 class Registro extends Model
 {
     protected $table = 'registros';
-    protected $fillable = ['folio', 'totalHoras'];
+    protected $fillable = ['folio', 'totalHoras', 'fechaInicio', 'fechaFin', 'municipio_id'];
 
-        //RELATIONSHIPS
+    //RELATIONSHIPS
+
+    public function evidencias()
+    {
+        return $this->hasMany('App\Evidencia', 'registro_id', 'id');
+    }
+
+    public function municipio()
+    {
+        return $this->belongsTo('App\Municipio', 'municipio_id');
+    }
 
     //ACCESORS
-
+    //MUTATORS
+    public function getFechaInicioAttribute($value)
+    {
+        $mes = [
+            'no',
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Septiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre'
+        ];
+        $fecha = strtotime($value);
+        // or if you want to output a date in year/month/day format:
+        $date = date("n", $fecha);
+        return $mes[$date];
+    }
     //INTERNAL FUNCTIONS
 
     private function buildDataFillable ($data) {
@@ -52,4 +85,20 @@ class Registro extends Model
     public function getAllList() {
         return $this->all()->pluck('correo');
     }
+
+    public function checkCalendario()
+    {
+        return $this->evidencias->where('tipo_id', 1)->count();
+    }
+    
+    public function checkReporte()
+    {
+        return $this->evidencias->where('tipo_id', 2)->count();
+    }
+    
+    public function checkGps()
+    {
+        return $this->evidencias->where('tipo_id', 3)->count();
+    }
+
 }
