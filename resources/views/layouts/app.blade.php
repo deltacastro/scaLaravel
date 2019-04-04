@@ -19,7 +19,12 @@
         #table_id_wrapper {
             margin-top: 5%;
         }
-
+        #cover {
+            background-color: rgba(91, 91, 91, .5);
+            position: absolute;
+            height: 100%;
+            width: 100%;
+        }
         
     </style>
     @yield('styles')
@@ -30,7 +35,8 @@
             @include('layouts.navbar.materialize')
         @endauth
     </header>
-        
+        <div id="cover"></div>
+        <!-- rest of the page... -->
         @auth
             @include('layouts.navbar.aside')
         @endauth
@@ -47,6 +53,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
+        $(window).on('load', function(){
+            $('#cover').fadeOut(1000);
+        })
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -60,10 +69,12 @@
             };
         })();
         $(document).ajaxStart(function() {
+                $('#cover').fadeIn(1000);
                 let determinate = document.getElementById('determinate');
                 determinate.style.width = '50%'
             })
             .ajaxStop(function() {
+                $('#cover').fadeOut(1000);
                 let determinate = document.getElementById('determinate');
                 determinate.style.width = '100%'
                 delay(function(){
@@ -71,6 +82,7 @@
                     determinate.style.width = '0%'
                 }, 500)
             }).ajaxComplete(function() {
+                $('#cover').fadeOut(1000);
                 let determinate = document.getElementById('determinate');
                 determinate.style.width = '100%'
                 delay(function(){

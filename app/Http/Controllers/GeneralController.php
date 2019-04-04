@@ -36,7 +36,7 @@ class GeneralController extends Controller
     {
         if (Auth::user()->tipoUsuario > 0) {
             $evidencias = $registro->evidencias->where('tipo_id', $tipo);
-            $title = $this->tem->find($tipo)->nombre;
+            $title = $this->tem->find($tipo)->mostrar;
             return view('admin._listImg', compact('evidencias', 'title'));
         } else {
             return redirect('home');

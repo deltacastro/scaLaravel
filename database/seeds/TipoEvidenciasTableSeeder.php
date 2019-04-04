@@ -12,10 +12,11 @@ class TipoEvidenciasTableSeeder extends Seeder
      */
     public function run()
     {
+        
         $datas = [
-            ['nombre' => 'calendario'],
-            ['nombre' => 'entrada y salida'],
-            ['nombre' => 'gps']
+            ['nombre' => 'calendario', 'mostrar' => 'Calendario'],
+            ['nombre' => 'entrada y salida', 'mostrar' => 'Entrada y Salida'],
+            ['nombre' => 'gps', 'mostrar' => 'GPS']
         ];
 
         foreach ($datas as $key => $value) {

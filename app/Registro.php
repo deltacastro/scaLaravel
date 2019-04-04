@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use \DateTime;
 
 class Registro extends Model
 {
@@ -22,7 +23,29 @@ class Registro extends Model
     }
 
     //ACCESORS
-
+    //MUTATORS
+    public function getFechaInicioAttribute($value)
+    {
+        $mes = [
+            'no',
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Septiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre'
+        ];
+        $fecha = strtotime($value);
+        // or if you want to output a date in year/month/day format:
+        $date = date("n", $fecha);
+        return $mes[$date];
+    }
     //INTERNAL FUNCTIONS
 
     private function buildDataFillable ($data) {
