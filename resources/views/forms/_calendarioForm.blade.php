@@ -73,7 +73,16 @@
                                 <input class="file-path validate" type="text">
                             </div>
                         </div>
-                        <ul class="collection" data-img="calendario"></ul>
+                        <table data-img="calendario">
+                            <thead>
+                                <tr>
+                                    <th>Archivos seleccionados</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <br>
                         <a data-action="{{ route("post.evidencia") }}" data-target="calendario" class="btn-small green white-text right guardar">
                             <i class="large material-icons">check</i>
                         </a>
@@ -92,7 +101,16 @@
                                 <input class="file-path validate" type="text">
                             </div>
                         </div>
-                        <ul class="collection" data-img="entradaSalida"></ul>
+                        <table data-img="entradaSalida">
+                            <thead>
+                                <tr>
+                                    <th>Archivos seleccionados</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <br>
                         <a data-action="{{ route("post.evidencia") }}" data-target="entradaSalida" class="btn-small green white-text right guardar">
                             <i class="large material-icons">check</i>
                         </a>
@@ -111,7 +129,16 @@
                                 <input class="file-path validate" type="text">
                             </div>
                         </div>
-                        <ul class="collection" data-img="gps"></ul>
+                        <table data-img="gps">
+                            <thead>
+                                <tr>
+                                    <th>Archivos seleccionados</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <br>
                         <a data-action="{{ route("post.evidencia") }}" data-target="gps" class="btn-small green white-text right guardar">
                             <i class="large material-icons">check</i>
                         </a>
@@ -185,19 +212,25 @@
                     done: 'Elegir'
                 }
             });
-            $('ul[data-img]').hide();
+            $('table[data-img]').hide();
             $('select').formSelect();
+            
             $('.guardar').on('click', function() {
                 let targetId = $(this).data('target');
                 console.log(targetId);
                 let formData = new FormData();
                 let fileElem = document.getElementById(targetId);
+                console.log(`fecha[${targetId}][]`);
                 let registro_id = $('[name="registro_id"]').val();
                 formData.append('registro_id', registro_id);
                 $.each(fileElem.files, function (indexInArray, valueOfElement) {      
                     console.log(indexInArray);
                     console.log(valueOfElement);
+                    let fecha = document.getElementsByName("fecha[" + targetId + "][" + indexInArray + "]");
+                    console.log("fecha[" + targetId + "][" + indexInArray + "]");
+                    console.log('fecha:', fecha);
                     formData.append(`${targetId}[${indexInArray}]`, valueOfElement);
+                    formData.append(`fecha[${targetId}][${indexInArray}]`, fecha[0].value);
                 });
                 fileAjax(formData); 
             })  
@@ -250,12 +283,13 @@
             $('input[type="file"]').on('change', function(e){
                 var id = $(this).attr('id');
                 if(e.target.files.length === 0){
-                    $('ul[data-img='+id+']').hide();
+                    $('table[data-img='+id+']').hide();
                 }   
                 else{
-                    $('ul[data-img='+id+']').show().empty();
+                    $('table[data-img='+id+']').show()
+                    $('table[data-img='+id+'] > tbody').empty();
                     for (var i = 0; i < e.target.files.length; i++) {
-                        $('ul[data-img='+id+']').append('<li class="collection-item">'+e.target.files[i].name+'</li>');
+                        $('table[data-img='+id+'] > tbody').append('<tr><td>'+e.target.files[i].name+'</td><td><input type="date" name="fecha['+id+']['+i+']" id=""></td></tr>');
                     }
                 }
             });

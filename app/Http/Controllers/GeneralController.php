@@ -124,6 +124,7 @@ class GeneralController extends Controller
     public function postEvidencia (Request $request)
     {
         if (Auth::user()->tipoUsuario == 1) {
+            $fechas = '';
             $listTipoEvi = $this->tem->all()->pluck('id', 'nombre')->toArray();
             $tipo_id = '';
             $files = '';
@@ -137,14 +138,17 @@ class GeneralController extends Controller
                 $tipo_id = $listTipoEvi['entrada y salida'];
                 $files = $request->file('entradaSalida');
                 $extra = 'entradaSalida';
+                $fechas = $request->get('fecha')[$extra];
             } else if ($request->file('gps') !==null) {
                 $tipo_id = $listTipoEvi['gps'];
                 $files = $request->file('gps');
                 $extra = 'gps';
+                $fechas = $request->get('fecha')[$extra];
             } else if ($request->file('calendario') !==null) {
                 $tipo_id = $listTipoEvi['calendario'];
                 $files = $request->file('calendario');
                 $extra = 'calendario';
+                $fechas = $request->get('fecha')[$extra];
             }
 
             foreach ($files as $key => $file) {
@@ -160,6 +164,7 @@ class GeneralController extends Controller
                 $evidenciaM->path = $path;
                 $evidenciaM->nombre = $nombre;
                 $evidenciaM->extension = $extension;
+                $evidenciaM->fecha = $fechas[$key];
                 $evidencia = $evidenciaM->save();
             }
 
