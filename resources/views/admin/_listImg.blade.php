@@ -30,10 +30,11 @@
                 <div class="divider"></div>
                 <br>
                 @forelse ($evidencias as $evidencia)
+                    <h6>{{ $evidencia->fecha }}</h6>
                     @if ($evidencia->extension == 'pdf')
                         <embed height="400px" src="{{ asset('storage/' . $evidencia->path) }}" type="" width="100%">
                     @else
-                        <img class="responsive-img" src="{{ asset('storage/' . $evidencia->path) }}" alt="">
+                        <img class="responsive-img z-depth-4" src="{{ asset('storage/' . $evidencia->path) }}" alt="">
                     @endif
                 @empty
                     si vz esto, ago malo debe estar pasando!

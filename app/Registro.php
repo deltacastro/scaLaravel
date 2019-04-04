@@ -24,8 +24,10 @@ class Registro extends Model
 
     //ACCESORS
     //MUTATORS
-    public function getFechaInicioAttribute($value)
+
+    public function getFechaInicioMesAttribute($value)
     {
+        $value = $this->fechaInicio;
         $mes = [
             'no',
             'Enero',

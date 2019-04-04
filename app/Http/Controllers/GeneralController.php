@@ -53,6 +53,20 @@ class GeneralController extends Controller
         }
     }
 
+    public function editRegistro (Registro $registro)
+    {
+        if (Auth::user()->tipoUsuario == 1) {
+            $municipios = $this->municipioM->getAll();
+            $evidenciasCal = $registro->evidencias->where('tipo_id', 1);
+            $entradasSalidas = $registro->evidencias->where('tipo_id', 2);
+            $gpss = $registro->evidencias->where('tipo_id', 3);
+            return view('forms._editForm', compact('municipios', 'registro', 'evidenciasCal', 'entradasSalidas', 'gpss'));
+        } else {
+            return redirect('home');
+        }
+    }
+
+
     public function getCalendarioList ()
     {
         if (Auth::user()->tipoUsuario == 1) {

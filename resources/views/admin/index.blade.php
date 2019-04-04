@@ -38,7 +38,7 @@
                         @foreach ($modelList as $data)
                         <tr>
                             {{-- <td>{{ $data->folio }}</td> --}}
-                            <td>{{ $data->fechaInicio }}</td>
+                            <td>{{ $data->fechaInicioMes }}</td>
                             {{-- <td>{{ $data->totalHoras }}</td> --}}
                             <td>{{ $data->municipio->nombre }}</td>
                             <td>
@@ -58,7 +58,7 @@
                             </td>
                             @if (Auth::user()->tipoUsuario == 1)
                                 <td>
-                                    <a target="_blank" href="#"><i class="material-icons">edit</i></a>
+                                    <a target="_blank" href="{{ route('get.editRegistro', ['registro' => $data]) }}"><i class="material-icons">edit</i></a>
                                 </td>
                             @endif
                             </tr> 
