@@ -27,7 +27,7 @@
                 <h5>Editar</h5>
                 <br>
                 <div class="divider"></div>
-                <input type="text" name="registro_id" value="{{ $registro->id }}">
+                <input hidden type="text" name="registro_id" value="{{ $registro->id }}">
                 <br> {{--
                 <div class="row">
                     <div class="input-field col l6">
@@ -65,7 +65,7 @@
 
                 <br>
 
-                <ul class="collapsible">
+                <ul class="collapsible" id="collapsible">
                     <li>
                         <div class="collapsible-header"><i class="material-icons">event_note</i>Calendario</div>
                         <div class="collapsible-body">
@@ -93,7 +93,7 @@
                                 </a>
                             <br>
                             <br>
-                            <div class="loadListcalendario">
+                            <div class="loadListcalendario listLoad">
                                 @forelse ($evidenciasCal as $eviCal)
                                     <div class="card">
                                         <div class="card-image">
@@ -112,6 +112,11 @@
                                             <a href="#" class="btn red white-text guardar" data-action="" data-target="calendario">
                                                 <i class="large material-icons">delete_forever</i>
                                             </a>
+                                            <a class="btn btn-default eliminar" title="Eliminar" data-formtarget="form{{ $eviCal->id }}"><i class="fa fa-trash-alt"></i></a>
+                                            <form id="form{{ $eviCal->id }}" action="{{ route('post.calendarioEliminar',['evidencia' => $eviCal->id]) }}" method="POST" style="display: none;">
+                                                {{ csrf_field() }}
+                                                {{ method_field('DELETE') }}
+                                            </form>
                                         </div>
                                     </div>
                                 @empty
@@ -148,7 +153,7 @@
                                 </a>
                             <br>
                             <br>
-                            <div class="loadListentradaSalida">
+                            <div class="loadListentradaSalida listLoad">
                                 @forelse ($entradasSalidas as $entsal)
                                     <div class="card">
                                         <div class="card-image">
@@ -167,6 +172,11 @@
                                             <a href="#" class="btn red white-text guardar" data-action="" data-target="entradaSalida">
                                                 <i class="large material-icons">delete_forever</i>
                                             </a>
+                                            <a class="btn btn-default eliminar" title="Eliminar" data-formtarget="form{{ $entsal->id }}"><i class="fa fa-trash-alt"></i></a>
+                                            <form id="form{{ $entsal->id }}" action="{{ route('post.calendarioEliminar',['evidencia' => $entsal->id]) }}" method="POST" style="display: none;">
+                                                {{ csrf_field() }}
+                                                {{ method_field('DELETE') }}
+                                            </form>
                                         </div>
                                     </div>
                                 @empty
@@ -202,7 +212,7 @@
                                 </a>
                             <br>
                             <br>
-                            <div class="loadListgps">
+                            <div class="loadListgps listLoad">
                                 @forelse ($gpss as $gps)
                                     <div class="card">
                                         <div class="card-image">
@@ -221,6 +231,11 @@
                                             <a href="#" class="btn red white-text guardar" data-action="" data-target="gps">
                                                 <i class="large material-icons">delete_forever</i>
                                             </a>
+                                            <a class="btn btn-default eliminar" title="Eliminar" data-formtarget="form{{ $gps->id }}" ><i class="fa fa-trash-alt"></i></a>
+                                            <form id="form{{ $gps->id }}" action="{{ route('post.calendarioEliminar',['evidencia' => $gps->id]) }}" method="POST" style="display: none;">
+                                                {{ csrf_field() }}
+                                                {{ method_field('DELETE') }}
+                                            </form>
                                         </div>
                                     </div>
                                 @empty
@@ -270,7 +285,8 @@
                 success: function (response) {
                     console.log(response);
                     if (response.type == 'view') {
-                        $( '#calendarioList' ).html( response.view );
+                        // $( '#calendarioList' ).html( response.view );
+                        $( `.${response.class}` ).html( response.view );
                     } else if (response.type == 'fk') {
                         $( `[name="${response.name}"]` ).val(response.value);
                         $("#divHide").show();
@@ -348,8 +364,10 @@
                 ajax(method, action, data);
             });
 
-            $('#calendarioList').on('click', '.eliminar', function () {
+            $('.listLoad').on('click', '.eliminar', function () {
                 let formId = $(this).data('formtarget');
+                console.log(formId);
+                
                 let form = document.getElementById(formId);
                 console.log(form);
                 let method = 'POST';
@@ -362,6 +380,7 @@
                     _method: _method
                 };
                 ajax(method, action, data);
+                
             });
             $('input[type="file"]').on('change', function(e){
                 var id = $(this).attr('id');

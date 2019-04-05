@@ -164,16 +164,29 @@ class GeneralController extends Controller
         }
     }
 
-    public function postCalendarioEliminar (Request $request, Calendario $calendario)
+    public function postEvidenciaEliminar (Request $request, Evidencia $evidencia)
     {
         if (Auth::user()->tipoUsuario == 1) {
-            $result = $calendario->eliminar();
-            $calendarioAll = $this->calendarioM->getAll();
-            $view = view('lists._calendarioList', compact('calendarioAll'))->render(); 
+            // dd($evidencia);
+            $registro_id = $evidencia->registro_id;
+            $tipo_id = $evidencia->tipo_id;
+            $extra = '';
+            if ($evidencia->tipo_id == 1) {
+                $extra = 'calendario';
+            } else if ($evidencia->tipo_id == 2) {
+                $extra = 'entradaSalida';
+            } else if ($evidencia->tipo_id == 3) {
+                $extra = 'gps';
+            }
+            $result = $evidencia->eliminar();
+            $evidencias = $this->evidenciaM->where('registro_id', $registro_id)->where('tipo_id', $tipo_id)->get();
+            
+            $view = view('lists._fileList', compact('evidencias'))->render(); 
             return response()->json(
                 [
                     'type' => 'view',
-                    'view' => $view
+                    'view' => $view,
+                    'class' => "loadList$extra"
                 ],
                 200
             );
