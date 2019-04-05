@@ -176,6 +176,7 @@
                 type: 'POST', // For jQuery < 1.9
                 success: function(data){
                     $( `.${data.class}` ).html( data.view );
+                    
                 }
             });
         }

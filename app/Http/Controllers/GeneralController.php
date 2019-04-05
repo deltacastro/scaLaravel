@@ -258,14 +258,14 @@ class GeneralController extends Controller
                 $evidencia = $evidenciaM->save();
             }
 
-            $evidenciasAll = $this->evidenciaM->getMy($registro_id, $tipo_id);
+            // $evidencias = $this->evidenciaM->getMy($registro_id, $tipo_id);
 
-            $view = view('lists._fileList', compact('evidenciasAll'))->render(); 
+            // $view = view('lists._fileList', compact('evidencias'))->render(); 
             return response()->json(
                 [
-                    'type' => 'view',
-                    'view' => $view,
-                    'class' => $extra
+                    // 'type' => 'view',
+                    // 'view' => $view,
+                    // 'class' => $extra
                 ],
                 200
             );
