@@ -13,10 +13,7 @@
             <p>{{ $evidencia->fecha }}</p>
         </div>
         <div class="card-action right-align">
-            <a href="#" class="btn red white-text guardar" data-action="" data-target="calendario">
-                <i class="large material-icons">delete_forever</i>
-            </a>
-            <a class="btn btn-default eliminar" title="Eliminar" data-formtarget="form{{ $evidencia->id }}"><i class="fa fa-trash-alt"></i></a>
+            <a class="btn red eliminar" title="Eliminar" data-formtarget="form{{ $evidencia->id }}"><i class="large material-icons">delete_forever</i></a>
             <form id="form{{ $evidencia->id }}" action="{{ route('post.calendarioEliminar',['evidencia' => $evidencia->id]) }}" method="POST" style="display: none;">
                 {{ csrf_field() }}
                 {{ method_field('DELETE') }}

@@ -23,7 +23,7 @@
 <div class="container">
     <div class="row">
         <div class="animated fadeIn delay-1s" id="cont">
-            <div class="row">
+            <div class="row loadTable">
                 <h5>Editar</h5>
                 <br>
                 <div class="divider"></div>
@@ -109,10 +109,7 @@
                                             <p>{{ $eviCal->fecha }}</p>
                                         </div>
                                         <div class="card-action right-align">
-                                            <a href="#" class="btn red white-text guardar" data-action="" data-target="calendario">
-                                                <i class="large material-icons">delete_forever</i>
-                                            </a>
-                                            <a class="btn btn-default eliminar" title="Eliminar" data-formtarget="form{{ $eviCal->id }}"><i class="fa fa-trash-alt"></i></a>
+                                            <a class="btn red eliminar" title="Eliminar" data-formtarget="form{{ $eviCal->id }}"><i class="large material-icons">delete_forever</i></a>
                                             <form id="form{{ $eviCal->id }}" action="{{ route('post.calendarioEliminar',['evidencia' => $eviCal->id]) }}" method="POST" style="display: none;">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
@@ -169,10 +166,7 @@
                                             <p>{{ $entsal->fecha }}</p>
                                         </div>
                                         <div class="card-action right-align">
-                                            <a href="#" class="btn red white-text guardar" data-action="" data-target="entradaSalida">
-                                                <i class="large material-icons">delete_forever</i>
-                                            </a>
-                                            <a class="btn btn-default eliminar" title="Eliminar" data-formtarget="form{{ $entsal->id }}"><i class="fa fa-trash-alt"></i></a>
+                                            <a class="btn red eliminar" title="Eliminar" data-formtarget="form{{ $entsal->id }}"><i class="large material-icons">delete_forever</i></a>
                                             <form id="form{{ $entsal->id }}" action="{{ route('post.calendarioEliminar',['evidencia' => $entsal->id]) }}" method="POST" style="display: none;">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
@@ -228,10 +222,7 @@
                                             <p>{{ $gps->fecha }}</p>
                                         </div>
                                         <div class="card-action right-align">
-                                            <a href="#" class="btn red white-text guardar" data-action="" data-target="gps">
-                                                <i class="large material-icons">delete_forever</i>
-                                            </a>
-                                            <a class="btn btn-default eliminar" title="Eliminar" data-formtarget="form{{ $gps->id }}" ><i class="fa fa-trash-alt"></i></a>
+                                            <a class="btn red eliminar" title="Eliminar" data-formtarget="form{{ $gps->id }}" ><i class="large material-icons">delete_forever</i></a>
                                             <form id="form{{ $gps->id }}" action="{{ route('post.calendarioEliminar',['evidencia' => $gps->id]) }}" method="POST" style="display: none;">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
@@ -248,6 +239,16 @@
 
             </div>
         </div>
+    </div>
+</div>
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h5>¡Peligro!</h5>
+        <p>¿Realmente desea eliminarlo?</p>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+        <a id="eliminarSubmit" data-form="generalForm" class="modal-close waves-effect waves-green btn-flat">Eliminar</a>
     </div>
 </div>
 @endsection
@@ -364,12 +365,21 @@
                 ajax(method, action, data);
             });
 
-            $('.listLoad').on('click', '.eliminar', function () {
-                let formId = $(this).data('formtarget');
-                console.log(formId);
+            $('.loadTable').on('click', '.eliminar', function () {
+                let eliminarSubmit = document.getElementById('eliminarSubmit');
+                let formId = this.dataset.formtarget;
+                console.log('primer click', formId);
                 
+                eliminarSubmit.dataset.formtarget = formId;
+
+                let elem = document.querySelector('#modal1');
+                let instance = M.Modal.init(elem, '');
+                instance.open();
+            });
+            
+            $(document).on('click', '#eliminarSubmit', function () {
+                let formId = this.dataset.formtarget;
                 let form = document.getElementById(formId);
-                console.log(form);
                 let method = 'POST';
                 let action = form.action;
                 let _token = $('[name="_token"]').val();
@@ -380,8 +390,8 @@
                     _method: _method
                 };
                 ajax(method, action, data);
-                
             });
+
             $('input[type="file"]').on('change', function(e){
                 var id = $(this).attr('id');
                 if(e.target.files.length === 0){

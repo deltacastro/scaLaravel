@@ -38,7 +38,7 @@
             @if (Auth::user()->tipoUsuario == 1)
                 <td>
                     <a target="_blank" href="{{ route('get.editRegistro', ['registro' => $data]) }}"><i class="material-icons">edit</i></a>
-                    <a title="Eliminar" data-formtarget="form{{ $data->id }}"><i class="material-icons">delete</i></a>
+                    <a class="eliminar" href="javascript:;" title="Eliminar" data-formtarget="form{{ $data->id }}"><i class="material-icons">delete</i></a>
                     <form id="form{{ $data->id }}" action="{{ route('post.registroEliminar',['registro' => $data->id]) }}" method="POST" style="display: none;">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
