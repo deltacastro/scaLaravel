@@ -195,6 +195,25 @@ class GeneralController extends Controller
         }
     }
 
+    public function postRegistroEliminar (Request $request, Registro $registro)
+    {
+        if (Auth::user()->tipoUsuario == 1) {
+            $result = $registro->eliminar();
+            $modelList = $this->registroM->getAll();
+            $view = view('admin._loadTable', compact('modelList'))->render(); 
+            return response()->json(
+                [
+                    'type' => 'view',
+                    'view' => $view,
+                    'class' => "loadTable"
+                ],
+                200
+            );
+        } else {
+            return redirect('home');
+        }
+    }
+
     public function postFolio (Request $request)
     {
         if (Auth::user()->tipoUsuario == 1) {

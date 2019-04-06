@@ -18,7 +18,7 @@
 @section('form-body')
     <div class="container">
         <div class="row">
-            <div class="animated fadeIn delay-1s">
+            <div class="animated fadeIn delay-1s loadTable">
                 <table id="table_id" class="display cell-border">
                     <thead>
                         <tr>
@@ -34,7 +34,7 @@
                             @endif
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="bodyList">
                         @foreach ($modelList as $data)
                         <tr>
                             {{-- <td>{{ $data->folio }}</td> --}}
@@ -59,6 +59,11 @@
                             @if (Auth::user()->tipoUsuario == 1)
                                 <td>
                                     <a target="_blank" href="{{ route('get.editRegistro', ['registro' => $data]) }}"><i class="material-icons">edit</i></a>
+                                    <a title="Eliminar" data-formtarget="form{{ $data->id }}"><i class="material-icons">delete</i></a>
+                                    <form id="form{{ $data->id }}" action="{{ route('post.registroEliminar',['registro' => $data->id]) }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+                                    </form>
                                 </td>
                             @endif
                             </tr> 
@@ -77,6 +82,26 @@
 
 @section('javascript')
     <script>
+
+        let ajax = (method, action, data, callback, target) => {
+            $.ajax({
+                type: method,
+                url: action,
+                data: data,
+                success: function (response) {
+                    console.log(response);
+                    if (response.type == 'view') {
+                        // $( '#calendarioList' ).html( response.view );
+                        $( `.${response.class}` ).html( response.view );
+                    } else if (response.type == 'fk') {
+                        $( `[name="${response.name}"]` ).val(response.value);
+                        $("#divHide").show();
+                        $('#guardarRegistro').attr('disabled', 'disabled');
+                    }
+                }
+            });
+        }
+
         $(document).ready(function () {
             $('#table_id').DataTable({
                 "lengthChange": false,
@@ -89,6 +114,25 @@
                     "zeroRecords": "Sin resultados",
                     "search": "BUSCAR :"
                 }
+            });
+            
+            $(document).on('click', '.eliminar', function () {
+                let formId = $(this).data('formtarget');
+                console.log(formId);
+                
+                let form = document.getElementById(formId);
+                console.log(form);
+                let method = 'POST';
+                let action = form.action;
+                let _token = $('[name="_token"]').val();
+                let _method = $('[name="_method"]').val();
+                console.log(_token);
+                let data = {
+                    _token: _token,
+                    _method: _method
+                };
+                ajax(method, action, data);
+                
             });
         });
     </script>
