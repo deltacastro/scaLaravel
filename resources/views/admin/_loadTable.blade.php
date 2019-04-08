@@ -8,9 +8,7 @@
             <th>Calendario</th>
             <th>Reporte Entrada y Salida</th>
             <th>GPS</th>
-            @if (Auth::user()->tipoUsuario == 1)
-                <th>Opciones</th>    
-            @endif
+            <th>Opciones</th>    
         </tr>
     </thead>
     <tbody class="bodyList">
@@ -35,18 +33,18 @@
                     <a target="_blank" href="{{ route('get.listImg', ['registro' => $data, 'tipo' => 3]) }}"><i class="material-icons">visibility</i></a>
                 @endif
             </td>
-            @if (Auth::user()->tipoUsuario == 1)
-                <td>
+            <td>
+                <a href="{{ route('get.evidenciaZip', ['registro' => $data]) }}"><i class="material-icons">system_update_alt</i></a>
+                @if (Auth::user()->tipoUsuario == 1)
                     <a target="_blank" href="{{ route('get.editRegistro', ['registro' => $data]) }}"><i class="material-icons">edit</i></a>
                     <a class="eliminar" href="javascript:;" title="Eliminar" data-formtarget="form{{ $data->id }}"><i class="material-icons">delete</i></a>
                     <form id="form{{ $data->id }}" action="{{ route('post.registroEliminar',['registro' => $data->id]) }}" method="POST" style="display: none;">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
                     </form>
-                    <a href="{{ route('get.evidenciaZip', ['registro' => $data]) }}"><i class="material-icons">system_update_alt</i></a>
-                </td>
-            @endif
-            </tr> 
+                @endif
+            </td>
+        </tr> 
         @endforeach
     </tbody>
 </table>
