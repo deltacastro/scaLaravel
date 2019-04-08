@@ -31,4 +31,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::post('/registro/editar/{registro}', 'GeneralController@updateRegistro')->name('post.editEvidencia');
     Route::post('/folio', 'GeneralController@postFolio')->name('post.folio');
     Route::post('/evidencias', 'GeneralController@postEvidencia')->name('post.evidencia');
+    Route::get('/evidenciasZip/{registro}', 'GeneralController@downloadZip')->name('get.evidenciaZip');
 });

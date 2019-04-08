@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Calendario;
 use App\Registro;
 use App\TipoEvidencia;
 use App\Evidencia;
 use App\Municipio;
 use \Auth;
+use \ZipArchive;
 
 class GeneralController extends Controller
 {
@@ -291,6 +293,77 @@ class GeneralController extends Controller
         } else {
             return redirect('home');
         }
+    }
+
+    public function downloadZip(Registro $registro)
+    {
+        $responseDownload = null;
+
+        $registroFolio = $registro->folio;
+        
+        $evidencias = $registro->evidencias;
+
+        //Nombre aleatorio de la carpeta
+        $randomString = str_random(40);
+            
+        // Carpeta raiz donde se copiaran los archivos
+        $toFolder = "temp/$randomString";
+
+        // Carpeta raiz donde se generaran nuestros zips
+        $rootFolderZip = 'temp/zips/';
+        
+        // Creamos la carpeta root del zip en caso de que no exista
+        Storage::disk('local')->makeDirectory($rootFolderZip);
+        
+        // Carpeta y nombre del zip donde se va a crear
+        $folderZip = Storage::disk('local')->path("$rootFolderZip/$registroFolio.zip");
+
+        foreach ($evidencias as $evidencia) {
+
+            $evidenciaNombre = $evidencia->nombre;
+            
+            $evidenciaPath = $evidencia->path;
+
+            $evidenciaTipo = $evidencia->tipoEvidencia->nombre;
+            
+            // Carpeta raiz de los archivos que se vana copiar
+            $fileCopy = "public/$evidenciaPath";
+            
+            // Nombre del archivo zip
+            $zipFileName = "$registroFolio.zip";
+            
+            // Se copio el archivo?
+            $statusFileCp = Storage::disk('local')->copy($fileCopy, "$toFolder/$evidenciaNombre");
+            
+            // full path del archivo copiado
+            $fullPathCopyFile = Storage::disk('local')->path("$toFolder/$evidenciaNombre");
+            
+            //instancia
+            $zip = new ZipArchive;
+            
+            if ($zip->open($folderZip, ZipArchive::CREATE) === TRUE) {
+
+                $zip->addFile($fullPathCopyFile, "$evidenciaTipo/$evidenciaNombre");
+
+                $zip->close();
+            }
+
+        }
+        
+        // Eliminamos la carpeta que se copio
+        $statusFileDl = Storage::disk('local')->deleteDirectory($toFolder);
+
+        // Set Header
+        $headers = array(
+            'Content-Type' => 'application/octet-stream',
+        );
+
+        // Creamos el response de descarga
+        if(file_exists($folderZip)){
+            $responseDownload = response()->download($folderZip,$zipFileName,$headers)->deleteFileAfterSend(true);
+        }
+
+        return $responseDownload;
     }
 
 }

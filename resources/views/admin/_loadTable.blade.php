@@ -43,6 +43,7 @@
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
                     </form>
+                    <a href="{{ route('get.evidenciaZip', ['registro' => $data]) }}"><i class="material-icons">system_update_alt</i></a>
                 </td>
             @endif
             </tr> 

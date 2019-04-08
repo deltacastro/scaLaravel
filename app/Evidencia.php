@@ -11,6 +11,12 @@ class Evidencia extends Model
 
     //RELATIONSHIPS
 
+    public function tipoEvidencia()
+    {
+        return $this->belongsTo(TipoEvidencia::class, 'tipo_id');
+    }
+
+
     //ACCESORS
 
     //INTERNAL FUNCTIONS
