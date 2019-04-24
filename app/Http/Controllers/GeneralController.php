@@ -37,7 +37,7 @@ class GeneralController extends Controller
     public function listImg(Registro $registro, $tipo)
     {
         if (Auth::user()->tipoUsuario > 0) {
-            $evidencias = $registro->evidencias->where('tipo_id', $tipo);
+            $evidencias = $registro->evidencias()->where('tipo_id', $tipo)->orderBy('fecha', 'ASC')->get();
             $title = $this->tem->find($tipo)->mostrar;
             return view('admin._listImg', compact('evidencias', 'title'));
         } else {
