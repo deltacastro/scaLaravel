@@ -17,6 +17,10 @@
             width: 100% !important;
             margin-bottom: 20px;
         }
+
+        .card-content p {
+            font-size: 20px;
+        }
     </style>
 @endsection
 
@@ -40,8 +44,8 @@
                             <span class="card-title">{{ $evidencia->nombre }}</span>
                         </div>
                         <div class="card-content">
-                            <p>{{ $evidencia->nombre }}</p>
-                            <p>{{ $evidencia->fecha }}</p>
+                            <p><b>Nombre del archivo:</b>  {{ $evidencia->nombre }}</p>
+                            <p><b>Fecha:</b> {{ $evidencia->fecha }}</p>
                         </div>
                     </div>
                 @empty
