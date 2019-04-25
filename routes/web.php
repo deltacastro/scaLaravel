@@ -32,4 +32,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::post('/folio', 'GeneralController@postFolio')->name('post.folio');
     Route::post('/evidencias', 'GeneralController@postEvidencia')->name('post.evidencia');
     Route::get('/evidenciasZip/{registro}', 'GeneralController@downloadZip')->name('get.evidenciaZip');
+    Route::get('/user', 'Admin\UsersController@index')->name('admin.user.index');
+    Route::get('/user/{user}/edit', 'Admin\UsersController@edit')->name('admin.user.edit');
+    Route::put('/user/{user}/update', 'Admin\UsersController@update')->name('admin.user.update');
 });
