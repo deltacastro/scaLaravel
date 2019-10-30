@@ -8,7 +8,7 @@ use \DateTime;
 class Registro extends Model
 {
     protected $table = 'registros';
-    protected $fillable = ['folio', 'totalHoras', 'fechaInicio', 'fechaFin', 'municipio_id'];
+    protected $fillable = ['folio', 'totalHoras', 'fechaInicio', 'fechaFin', 'municipio_id', 'estado_id'];
 
     //RELATIONSHIPS
 
@@ -20,6 +20,11 @@ class Registro extends Model
     public function municipio()
     {
         return $this->belongsTo('App\Municipio', 'municipio_id');
+    }
+
+    public function estado()
+    {
+        return $this->belongsTo('App\Estado', 'estado_id');
     }
 
     //ACCESORS
