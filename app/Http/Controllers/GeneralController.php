@@ -9,6 +9,7 @@ use App\Registro;
 use App\TipoEvidencia;
 use App\Evidencia;
 use App\Municipio;
+use App\Estado;
 use \Auth;
 use \ZipArchive;
 
@@ -21,7 +22,7 @@ class GeneralController extends Controller
         $this->tem = new TipoEvidencia;
         $this->evidenciaM = new Evidencia;
         $this->municipioM = new Municipio;
-
+        $this->estadoM = new Estado;
     }
 
     public function index()
@@ -48,11 +49,19 @@ class GeneralController extends Controller
     public function getCalendarioV ()
     {
         if (Auth::user()->tipoUsuario == 1) {
+            $estados = $this->estadoM->All();
             $municipios = $this->municipioM->getAll();
-            return view('forms._calendarioForm', compact('municipios'));
+            return view('forms._calendarioForm', compact('estados'));
         } else {
             return redirect('home');
         }
+    }
+
+    public function getMunicipioList (Request $request)
+    {
+        $estado_id = $request->estado_id;
+        $municipios = $this->municipioM->where('estado_id', $estado_id)->get();
+        return view('forms._listMunicipio', compact('municipios'));
     }
 
     public function editRegistro (Registro $registro)
