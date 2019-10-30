@@ -46,13 +46,16 @@
                         </div>
                     </div>
                     <div class="input-field col s12">
-                        <select id="municipio_id" name="municipio_id">
+                        <select id="estado_id" name="estado_id">
                             <option value="" disabled selected>Elige una opción</option>
-                            @foreach ($municipios as $municipio)
-                                <option value="{{ $municipio->id }}">{{ $municipio->nombre }}</option>
+                            @foreach ($estados as $estado)
+                                <option value="{{ $estado->id }}">{{ $estado->nombre }}</option>
                             @endforeach
                         </select>
-                        <label>Municipio</label>
+                        <label>Estado</label>
+                    </div>
+                    <div id="municipio_ajax">
+
                     </div>
                     <input type="text" name="registro_id" hidden>
                     <a data-action="{{ route("post.folio") }}" id="guardarRegistro" class="btn-small green white-text right">
@@ -199,6 +202,20 @@
             });
         }
 
+        let munajax = (method, action, data, callback, target) => {
+            $.ajax({
+                type: method,
+                url: action,
+                data: data,
+                success: function (response) {
+                    console.log(response);
+                    $('#municipio_ajax').html( response );
+                    // $('').material_select();
+                    $('#municipio_id').formSelect();
+                }
+            });
+        }
+
         $(document).ready(function () {
             $('.datepicker').datepicker({
                 format: 'yyyy-mm-dd',
@@ -248,6 +265,16 @@
                 ajax(method, action, data, target);
             });
 
+            $('#estado_id').on('change', function () {
+                let method = 'GET';
+                let action = '{{ route("get.municipioList") }}';
+                // let actionGet = $(this).data('actionGet');
+                let target = '#municipio_ajax';
+                let estado_id = $('[name="estado_id"]').val();
+                let data = {estado_id: estado_id};
+                munajax(method, action, data, target);
+            });
+
             $('#guardarRegistro').on('click', function () {
                 let method = 'POST';
                 let action = $(this).data('action');
@@ -256,12 +283,14 @@
                 let fechaInicio = $('[name="fechaInicio"]').val();
                 let fechaFin = $('[name="fechaFin"]').val();
                 let municipio_id = $('[name="municipio_id"]').val();
+                let estado_id = $('[name="estado_id"]').val();
                 let data = {
                     folio: folio,
                     totalHoras: totalHoras,
                     fechaInicio: fechaInicio,
                     fechaFin: fechaFin,
-                    municipio_id: municipio_id
+                    municipio_id: municipio_id,
+                    estado_id: estado_id
                 };
                 ajax(method, action, data);
             });
