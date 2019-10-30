@@ -70,6 +70,7 @@
         })();
         $(document).ajaxStart(function() {
                 $('#cover').fadeIn(1000);
+                M.toast({html: 'Operación en proceso, espera confirmación', classes: 'yellow'})
                 let determinate = document.getElementById('determinate');
                 determinate.style.width = '50%'
             })
@@ -89,6 +90,8 @@
                     // determinate.hidden = true;
                     determinate.style.width = '0%'
                 }, 500)
+            }).ajaxSuccess(function() {
+                M.toast({html: 'Operación con éxito', classes: 'green'})
             });
     </script>
     @yield('javascript')

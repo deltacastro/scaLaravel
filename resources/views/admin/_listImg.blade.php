@@ -17,6 +17,10 @@
             width: 100% !important;
             margin-bottom: 20px;
         }
+
+        .card-content p {
+            font-size: 20px;
+        }
     </style>
 @endsection
 
@@ -30,14 +34,22 @@
                 <div class="divider"></div>
                 <br>
                 @forelse ($evidencias as $evidencia)
-                    @if ($evidencia->extension == 'pdf')
-                        <embed height="400px" src="{{ asset('storage/' . $evidencia->path) }}" type="" width="100%">
-                    @else
-                        <img class="responsive-img" src="{{ asset('storage/' . $evidencia->path) }}" alt="">
-                    @endif
+                    <div class="card">
+                        <div class="card-image">
+                            @if ($evidencia->extension == 'pdf')
+                                <embed height="400px" src="{{ asset('storage/' . $evidencia->path) }}" type="" width="100%">
+                            @else
+                                <img src="{{ asset('storage/' . $evidencia->path) }}" alt="">
+                            @endif
+                            <span class="card-title">{{ $evidencia->nombre }}</span>
+                        </div>
+                        <div class="card-content">
+                            <p><b>Nombre del archivo:</b>  {{ $evidencia->nombre }}</p>
+                            <p><b>Fecha:</b> {{ $evidencia->fecha }}</p>
+                        </div>
+                    </div>
                 @empty
-                    si vz esto, ago malo debe estar pasando!
-                    <a src="{{ asset('storage/' . $evidencia->path) }}">Descargame</a>
+                    No hay evidencias.
                 @endforelse
                 <br>
             </div>

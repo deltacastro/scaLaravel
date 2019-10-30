@@ -7,9 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Evidencia extends Model
 {
     protected $table = 'evidencias';
-    protected $fillable = ['registro_id', 'tipo_id', 'path', 'nombre', 'extension'];
+    protected $fillable = ['registro_id', 'tipo_id', 'path', 'nombre', 'extension', 'fecha'];
 
     //RELATIONSHIPS
+
+    public function tipoEvidencia()
+    {
+        return $this->belongsTo(TipoEvidencia::class, 'tipo_id');
+    }
+
 
     //ACCESORS
 

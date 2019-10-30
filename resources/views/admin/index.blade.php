@@ -18,54 +18,19 @@
 @section('form-body')
     <div class="container">
         <div class="row">
-            <div class="animated fadeIn delay-1s">
-                <table id="table_id" class="display cell-border">
-                    <thead>
-                        <tr>
-                            {{-- <th>Folio</th> --}}
-                            <th>Mes</th>
-                            {{-- <th>Total de horas</th> --}}
-                            <th>Municipio</th>
-                            <th>Calendario</th>
-                            <th>Reporte Entrada y Salida</th>
-                            <th>GPS</th>
-                            @if (Auth::user()->tipoUsuario == 1)
-                                <th>Opciones</th>    
-                            @endif
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($modelList as $data)
-                        <tr>
-                            {{-- <td>{{ $data->folio }}</td> --}}
-                            <td>{{ $data->fechaInicio }}</td>
-                            {{-- <td>{{ $data->totalHoras }}</td> --}}
-                            <td>{{ $data->municipio->nombre }}</td>
-                            <td>
-                                @if ($data->checkCalendario() > 0)
-                                    <a target="_blank" href="{{ route('get.listImg', ['registro' => $data, 'tipo' => 1]) }}"><i class="material-icons">visibility</i></a>    
-                                @endif
-                            </td>
-                            <td>
-                                @if ($data->checkReporte() > 0)
-                                    <a target="_blank" href="{{ route('get.listImg', ['registro' => $data, 'tipo' => 2]) }}"><i class="material-icons">visibility</i></a>
-                                @endif
-                            </td>
-                            <td>
-                                @if ($data->checkGps() > 0)
-                                    <a target="_blank" href="{{ route('get.listImg', ['registro' => $data, 'tipo' => 3]) }}"><i class="material-icons">visibility</i></a>
-                                @endif
-                            </td>
-                            @if (Auth::user()->tipoUsuario == 1)
-                                <td>
-                                    <a target="_blank" href="#"><i class="material-icons">edit</i></a>
-                                </td>
-                            @endif
-                            </tr> 
-                        @endforeach
-                    </tbody>
-                </table>
+            <div class="animated fadeIn delay-1s loadTable">
+                @include('admin._loadTable')
             </div>
+        </div>
+    </div>
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h5>¡Peligro!</h5>
+            <p>¿Realmente desea eliminarlo?</p>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+            <a id="eliminarSubmit" data-form="generalForm" class="modal-close waves-effect waves-green btn-flat">Eliminar</a>
         </div>
     </div>
 @endsection
@@ -77,7 +42,28 @@
 
 @section('javascript')
     <script>
-        $(document).ready(function () {
+
+        let ajax = (method, action, data, callback, target) => {
+            $.ajax({
+                type: method,
+                url: action,
+                data: data,
+                success: function (response) {
+                    console.log(response);
+                    if (response.type == 'view') {
+                        // $( '#calendarioList' ).html( response.view );
+                        $( `.${response.class}` ).html( response.view );
+                        dataTableInit();
+                    } else if (response.type == 'fk') {
+                        $( `[name="${response.name}"]` ).val(response.value);
+                        $("#divHide").show();
+                        $('#guardarRegistro').attr('disabled', 'disabled');
+                    }
+                }
+            });
+        }
+
+        let dataTableInit = () => {
             $('#table_id').DataTable({
                 "lengthChange": false,
                 "info": false,
@@ -89,6 +75,58 @@
                     "zeroRecords": "Sin resultados",
                     "search": "BUSCAR :"
                 }
+            });
+        }
+        $(document).ready(function () {
+            dataTableInit();
+            
+            // $(document).on('click', '.eliminar', function () {
+            //     let elem = document.querySelector('#modal1');
+            //     let instance = M.Modal.init(elem, '');
+            //     instance.open();
+                
+            //     let formId = $(this).data('formtarget');
+            //     console.log(formId);
+                
+            //     let form = document.getElementById(formId);
+            //     console.log(form);
+            //     let method = 'POST';
+            //     let action = form.action;
+            //     let _token = $('[name="_token"]').val();
+            //     let _method = $('[name="_method"]').val();
+            //     console.log(_token);
+            //     let data = {
+            //         _token: _token,
+            //         _method: _method
+            //     };
+            //     ajax(method, action, data);
+                
+            // });
+            $('.loadTable').on('click', '.eliminar', function () {
+                let eliminarSubmit = document.getElementById('eliminarSubmit');
+                let formId = this.dataset.formtarget;
+                console.log('primer click', formId);
+                
+                eliminarSubmit.dataset.formtarget = formId;
+
+                let elem = document.querySelector('#modal1');
+                let instance = M.Modal.init(elem, '');
+                instance.open();
+            });
+            
+            $(document).on('click', '#eliminarSubmit', function () {
+                let formId = this.dataset.formtarget;
+                let form = document.getElementById(formId);
+                let method = 'POST';
+                let action = form.action;
+                let _token = $('[name="_token"]').val();
+                let _method = $('[name="_method"]').val();
+                console.log(_token);
+                let data = {
+                    _token: _token,
+                    _method: _method
+                };
+                ajax(method, action, data);
             });
         });
     </script>
