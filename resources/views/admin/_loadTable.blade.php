@@ -4,6 +4,7 @@
             {{-- <th>Folio</th> --}}
             <th>Mes</th>
             {{-- <th>Total de horas</th> --}}
+            <th>Estado</th>
             <th>Municipio</th>
             <th>Calendario</th>
             <th>Reporte Entrada y Salida</th>
@@ -17,6 +18,7 @@
             {{-- <td>{{ $data->folio }}</td> --}}
             <td>{{ $data->fechaInicioMes }}</td>
             {{-- <td>{{ $data->totalHoras }}</td> --}}
+            <td>{{ $data->estado ? $data->estado->nombre : 'No se agrego estado' }}</td>
             <td>{{ $data->municipio->nombre }}</td>
             <td>
                 @if ($data->checkCalendario() > 0)
