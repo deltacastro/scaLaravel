@@ -24,6 +24,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/mostrar-evidencias/{registro}/{tipo}', 'GeneralController@listImg')->name('get.listImg');
     Route::get('/calendario', 'GeneralController@getCalendarioV')->name('get.calendario');
     Route::get('/calendarioList', 'GeneralController@getCalendarioList')->name('get.calendarioList');
+    Route::get('/municipioList', 'GeneralController@getMunicipioList')->name('get.municipioList');
     Route::delete('/calendarioEliminar/{evidencia}', 'GeneralController@postEvidenciaEliminar')->name('post.calendarioEliminar');
     Route::delete('/registroEliminar/{registro}', 'GeneralController@postRegistroEliminar')->name('post.registroEliminar');
     Route::post('/calendario', 'GeneralController@postCalendarioV')->name('post.calendario');
