@@ -53,6 +53,11 @@ class Registro extends Model
         $date = date("n", $fecha);
         return $mes[$date];
     }
+
+    public function getFechaNumberAttribute($value)
+    {
+        return strtotime($this->fechaInicio);
+    }
     //INTERNAL FUNCTIONS
 
     private function buildDataFillable ($data) {
