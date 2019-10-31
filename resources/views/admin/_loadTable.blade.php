@@ -16,7 +16,7 @@
         @foreach ($modelList as $data)
         <tr>
             {{-- <td>{{ $data->folio }}</td> --}}
-            <td>{{ $data->fechaInicioMes }}</td>
+            <td data-order="{{$data->fechaNumber}}">{{ $data->fechaInicioMes }}</td>
             {{-- <td>{{ $data->totalHoras }}</td> --}}
             <td>{{ $data->estado ? $data->estado->nombre : 'No se agrego estado' }}</td>
             <td>{{ $data->municipio->nombre }}</td>
