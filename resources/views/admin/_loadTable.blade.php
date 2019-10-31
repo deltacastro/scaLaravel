@@ -18,7 +18,7 @@
             {{-- <td>{{ $data->folio }}</td> --}}
             <td>{{ $data->fechaInicioMes }}</td>
             {{-- <td>{{ $data->totalHoras }}</td> --}}
-            <td>{{ $data->estado ? $data->estado->nombre : 'No se agrego estado' }}</td>
+            <td>{{ $data->estado != null ? $data->estado->nombre : 'No se agrego estado' }}</td>
             <td>{{ $data->municipio->nombre }}</td>
             <td>
                 @if ($data->checkCalendario() > 0)
