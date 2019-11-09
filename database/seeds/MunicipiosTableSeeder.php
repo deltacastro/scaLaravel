@@ -34,6 +34,9 @@ class MunicipiosTableSeeder extends Seeder
             ],
             'Durango' => [
                 ['nombre' => 'Victoria de Durango'],
+            ],
+            'Guanajuato' => [
+                ['nombre' => 'León'],
             ]
         ];
 
