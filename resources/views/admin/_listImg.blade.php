@@ -8,8 +8,8 @@
 
         .container {
             /* left: 300px; */
-            right: 0px;
-            position: absolute;
+            /* right: 0px; */
+            /* position: absolute; */
             width: 40%;
         }
 
