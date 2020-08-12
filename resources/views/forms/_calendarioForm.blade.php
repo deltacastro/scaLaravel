@@ -20,7 +20,7 @@
 <div class="container">
         <div class="row">
             <div class="col offset-l4 l8 animated fadeIn delay-1s" id="cont">
-                <div class="row">
+                <div class="row formData">
                     <h5>Folio y total de horas</h5>
                     <br>
                     <div class="divider"></div>
@@ -55,6 +55,9 @@
                         <label>Estado</label>
                     </div>
                     <div id="municipio_ajax">
+
+                    </div>
+                    <div id="sucursal_ajax">
 
                     </div>
                     <input type="text" name="registro_id" hidden>
@@ -216,6 +219,20 @@
             });
         }
 
+        let sucajax = (method, action, data, callback, target) => {
+            $.ajax({
+                type: method,
+                url: action,
+                data: data,
+                success: function (response) {
+                    console.log(response);
+                    $('#sucursal_ajax').html( response );
+                    // $('').material_select();
+                    $('#sucursal_id').formSelect();
+                }
+            });
+        }
+
         $(document).ready(function () {
             $('.datepicker').datepicker({
                 format: 'yyyy-mm-dd',
@@ -275,6 +292,24 @@
                 munajax(method, action, data, target);
             });
 
+            // $('.formData').on('change', '#municipio_id', function () {
+            //     let method = 'GET';
+            //     let action = '{{ route("get.sucursalList") }}';
+            //     // let actionGet = $(this).data('actionGet');
+            //     let target = '#sucursal_ajax';
+            //     let municipio_id = $('[name="municipio_id"]').val();
+            //     let data = {municipio_id: municipio_id};
+            //     sucajax(method, action, data, target);
+            // });
+
+            // $('.formData').on('change', '#estado_id', function () {
+            //     let method = 'GET';
+            //     let action = '{{ route("get.sucursalList") }}';
+            //     // let actionGet = $(this).data('actionGet');
+            //     let target = '#sucursal_ajax';
+            //     $(target).html('');
+            // });
+
             $('#guardarRegistro').on('click', function () {
                 let method = 'POST';
                 let action = $(this).data('action');
@@ -284,13 +319,15 @@
                 let fechaFin = $('[name="fechaFin"]').val();
                 let municipio_id = $('[name="municipio_id"]').val();
                 let estado_id = $('[name="estado_id"]').val();
+                // let sucursal_id = $('[name="sucursal_id"]').val();
                 let data = {
                     folio: folio,
                     totalHoras: totalHoras,
                     fechaInicio: fechaInicio,
                     fechaFin: fechaFin,
                     municipio_id: municipio_id,
-                    estado_id: estado_id
+                    estado_id: estado_id,
+                    // sucursal_id: sucursal_id
                 };
                 ajax(method, action, data);
             });

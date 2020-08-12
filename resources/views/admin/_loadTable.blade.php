@@ -2,6 +2,7 @@
     <thead>
         <tr>
             {{-- <th>Folio</th> --}}
+            <th>Año</th>
             <th>Mes</th>
             {{-- <th>Total de horas</th> --}}
             <th>Estado</th>
@@ -16,6 +17,7 @@
         @foreach ($modelList as $data)
         <tr>
             {{-- <td>{{ $data->folio }}</td> --}}
+            <td data-order="{{$data->fechaNumber}}">{{ $data->fechaInicioYear }}</td>
             <td data-order="{{$data->fechaNumber}}">{{ $data->fechaInicioMes }}</td>
             {{-- <td>{{ $data->totalHoras }}</td> --}}
             <td>{{ $data->estado ? $data->estado->nombre : 'No se agrego estado' }}</td>

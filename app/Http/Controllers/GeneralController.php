@@ -10,6 +10,7 @@ use App\TipoEvidencia;
 use App\Evidencia;
 use App\Municipio;
 use App\Estado;
+use App\Sucursal;
 use \Auth;
 use \ZipArchive;
 
@@ -23,6 +24,7 @@ class GeneralController extends Controller
         $this->evidenciaM = new Evidencia;
         $this->municipioM = new Municipio;
         $this->estadoM = new Estado;
+        $this->sucursalM = new Sucursal;
     }
 
     public function index()
@@ -62,6 +64,13 @@ class GeneralController extends Controller
         $estado_id = $request->estado_id;
         $municipios = $this->municipioM->where('estado_id', $estado_id)->get();
         return view('forms._listMunicipio', compact('municipios'));
+    }
+
+    public function getSucursalList (Request $request)
+    {
+        $municipio_id = $request->municipio_id;
+        $sucursales = $this->sucursalM->where('municipio_id', $municipio_id)->get();
+        return view('forms._listSucursal', compact('sucursales'));
     }
 
     public function editRegistro (Registro $registro)

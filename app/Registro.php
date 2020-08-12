@@ -9,6 +9,9 @@ class Registro extends Model
 {
     protected $table = 'registros';
     protected $fillable = ['folio', 'totalHoras', 'fechaInicio', 'fechaFin', 'municipio_id', 'estado_id'];
+    protected $dates = [
+        'fechaInicio'
+    ];
 
     //RELATIONSHIPS
 
@@ -52,6 +55,12 @@ class Registro extends Model
         // or if you want to output a date in year/month/day format:
         $date = date("n", $fecha);
         return $mes[$date];
+    }
+
+    public function getFechaInicioYearAttribute($value)
+    {
+        return $this->fechaInicio ? $this->fechaInicio->format('Y') : null;
+       
     }
 
     public function getFechaNumberAttribute($value)

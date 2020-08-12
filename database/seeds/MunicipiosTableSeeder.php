@@ -3,6 +3,8 @@
 use App\Estado;
 use Illuminate\Database\Seeder;
 use App\Municipio;
+use App\Sucursal;
+
 class MunicipiosTableSeeder extends Seeder
 {
     /**
@@ -14,36 +16,49 @@ class MunicipiosTableSeeder extends Seeder
     {
         $estados = [
             'Tabasco' => [
-                ['nombre' => 'Balancán'],
-                ['nombre' => 'Cárdenas'],
-                ['nombre' => 'Centla'],
-                ['nombre' => 'Centro'],
-                ['nombre' => 'Comalcalco'],
-                ['nombre' => 'Cunduacán'],
-                ['nombre' => 'Emiliano Zapata'],
-                ['nombre' => 'Huimanguillo'],
-                ['nombre' => 'Jalapa'],
-                ['nombre' => 'Jalpa de Méndez'],
-                ['nombre' => 'Jonuta'],
-                ['nombre' => 'Macuspana'],
-                ['nombre' => 'Nacajuca'],
-                ['nombre' => 'Paraíso'],
-                ['nombre' => 'Tacotalpa'],
-                ['nombre' => 'Teapa'],
-                ['nombre' => 'Tenosique']
+                'Balancán' => [],
+                'Cárdenas' => [],
+                'Centla' => [],
+                'Centro' => [],
+                'Comalcalco' => [],
+                'Cunduacán' => [],
+                'Emiliano Zapata' => [],
+                'Huimanguillo' => [],
+                'Jalapa' => [],
+                'Jalpa de Méndez' => [],
+                'Jonuta' => [],
+                'Macuspana' => [],
+                'Nacajuca' => [],
+                'Paraíso' => [],
+                'Tacotalpa' => [],
+                'Teapa' => [],
+                'Tenosique' => []
             ],
             'Durango' => [
-                ['nombre' => 'Victoria de Durango'],
+                'Victoria de Durango' => [],
             ],
             'Guanajuato' => [
-                ['nombre' => 'León'],
+                'León' => [
+                    ['nombre' => 'Sucursal 1'],
+                    ['nombre' => 'Sucursal 2']
+                ],
+                'San Juan del Rio' => []
+            ],
+            'Queretaro' => [
+                'San Luis de la Paz' => []
+            ],
+            'Michoacan' => [
+                'Morelia' => []
             ]
         ];
 
         foreach ($estados as $estado => $municipios) {
             $estado = Estado::firstorcreate(['nombre' => $estado]);
-            foreach ($municipios as $municipio) {
-                Municipio::updateorcreate($municipio, ['estado_id'=> $estado->id]);
+            foreach ($municipios as $municipio => $sucursales) {
+                $municipio = Municipio::updateorcreate(['nombre' => $municipio], ['estado_id'=> $estado->id]);
+                foreach ($sucursales as $sucursal) {
+                    Sucursal::firstorcreate(['nombre' => $sucursal['nombre'], 'municipio_id' => $municipio->id]);
+                }
             }
         }
     }
