@@ -91,7 +91,12 @@ class Registro extends Model
     }
 
     public function getAll() {
-        return $this->all();
+        $estadousuario = \Auth::user()->estado_id;
+        if($estadousuario == 0){
+            return $this->all();
+        }else{
+            return $this->where('estado_id', $estadousuario)->get();
+        }
     }
 
     public function getAllList() {
