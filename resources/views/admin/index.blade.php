@@ -8,9 +8,12 @@
         }
 
         .container{
-            left: 300px;
-            right: 0px;
-            position: absolute;
+            /* left: 300px; */
+            /* right: 0px; */
+            /* position: absolute; */
+        }
+        .overflow-x {
+            overflow-x: scroll;
         }
     </style>
 @endsection
@@ -18,7 +21,7 @@
 @section('form-body')
     <div class="container">
         <div class="row">
-            <div class="animated fadeIn delay-1s loadTable">
+            <div class="animated fadeIn delay-1s loadTable overflow-x">
                 @include('admin._loadTable')
             </div>
         </div>
@@ -66,6 +69,7 @@
         let dataTableInit = () => {
             $('#table_id').DataTable({
                 "lengthChange": false,
+                "responsive": true,
                 "info": false,
                 "language": {
                     "paginate": {

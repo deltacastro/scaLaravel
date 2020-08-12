@@ -6,10 +6,10 @@
     }
 
     .container {
-        left: 300px;
+        /* left: 300px; */
         right: 0px;
-        position: absolute;
-        width: 40%;
+        /* position: absolute; */
+        width: 90%;
     }
 
     .responsive-img {

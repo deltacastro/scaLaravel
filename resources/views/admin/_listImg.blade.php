@@ -7,7 +7,7 @@
         }
 
         .container {
-            left: 300px;
+            /* left: 300px; */
             right: 0px;
             position: absolute;
             width: 40%;

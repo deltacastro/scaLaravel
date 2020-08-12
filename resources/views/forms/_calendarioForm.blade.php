@@ -19,7 +19,7 @@
 @section('form-body')
 <div class="container">
         <div class="row">
-            <div class="col offset-l4 l8 animated fadeIn delay-1s" id="cont">
+            <div class="l8 animated fadeIn delay-1s" id="cont">
                 <div class="row formData">
                     <h5>Folio y total de horas</h5>
                     <br>
