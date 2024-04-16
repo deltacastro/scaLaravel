@@ -38,7 +38,7 @@
         <div id="cover"></div>
         <!-- rest of the page... -->
         @auth
-            {{-- @include('layouts.navbar.aside') --}}
+            @include('layouts.navbar.aside')
         @endauth
         @yield('content')
         {{-- <div id="app">
@@ -93,14 +93,6 @@
             }).ajaxSuccess(function() {
                 M.toast({html: 'Operación con éxito', classes: 'green'})
             });
-    </script>
-    
-    <script>
-        $(document).ready(function(){
-            $(".dropdown-trigger").dropdown({
-                constrainWidth: false
-            });
-        })
     </script>
     @yield('javascript')
 </body>

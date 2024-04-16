@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Municipio extends Model
+class Estado extends Model
 {
-    protected $table = 'municipios';
+    protected $table = 'estados';
     
-    protected $fillable = ['nombre', 'estado_id'];
+    protected $fillable = ['nombre'];
 
     public function getAll() {
         return $this->all();

@@ -8,7 +8,10 @@ use \DateTime;
 class Registro extends Model
 {
     protected $table = 'registros';
-    protected $fillable = ['folio', 'totalHoras', 'fechaInicio', 'fechaFin', 'municipio_id'];
+    protected $fillable = ['folio', 'totalHoras', 'fechaInicio', 'fechaFin', 'municipio_id', 'estado_id'];
+    protected $dates = [
+        'fechaInicio'
+    ];
 
     //RELATIONSHIPS
 
@@ -22,10 +25,17 @@ class Registro extends Model
         return $this->belongsTo('App\Municipio', 'municipio_id');
     }
 
+    public function estado()
+    {
+        return $this->belongsTo('App\Estado', 'estado_id');
+    }
+
     //ACCESORS
     //MUTATORS
-    public function getFechaInicioAttribute($value)
+
+    public function getFechaInicioMesAttribute($value)
     {
+        $value = $this->fechaInicio;
         $mes = [
             'no',
             'Enero',
@@ -45,6 +55,17 @@ class Registro extends Model
         // or if you want to output a date in year/month/day format:
         $date = date("n", $fecha);
         return $mes[$date];
+    }
+
+    public function getFechaInicioYearAttribute($value)
+    {
+        return $this->fechaInicio ? $this->fechaInicio->format('Y') : null;
+       
+    }
+
+    public function getFechaNumberAttribute($value)
+    {
+        return strtotime($this->fechaInicio);
     }
     //INTERNAL FUNCTIONS
 
@@ -79,7 +100,12 @@ class Registro extends Model
     }
 
     public function getAll() {
-        return $this->all();
+        $estadousuario = \Auth::user()->estado_id;
+        if($estadousuario == 0){
+            return $this->all();
+        }else{
+            return $this->where('estado_id', $estadousuario)->get();
+        }
     }
 
     public function getAllList() {

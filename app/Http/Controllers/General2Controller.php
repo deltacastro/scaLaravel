@@ -9,12 +9,10 @@ use App\Registro;
 use App\TipoEvidencia;
 use App\Evidencia;
 use App\Municipio;
-use App\Estado;
-use App\Sucursal;
 use \Auth;
 use \ZipArchive;
 
-class GeneralController extends Controller
+class GeneralController2 extends Controller
 {
     public function __construct ()
     {
@@ -23,8 +21,7 @@ class GeneralController extends Controller
         $this->tem = new TipoEvidencia;
         $this->evidenciaM = new Evidencia;
         $this->municipioM = new Municipio;
-        $this->estadoM = new Estado;
-        $this->sucursalM = new Sucursal;
+
     }
 
     public function index()
@@ -51,26 +48,11 @@ class GeneralController extends Controller
     public function getCalendarioV ()
     {
         if (Auth::user()->tipoUsuario == 1) {
-            $estados = $this->estadoM->All();
             $municipios = $this->municipioM->getAll();
-            return view('forms._calendarioForm', compact('estados'));
+            return view('forms._calendarioForm', compact('municipios'));
         } else {
             return redirect('home');
         }
-    }
-
-    public function getMunicipioList (Request $request)
-    {
-        $estado_id = $request->estado_id;
-        $municipios = $this->municipioM->where('estado_id', $estado_id)->get();
-        return view('forms._listMunicipio', compact('municipios'));
-    }
-
-    public function getSucursalList (Request $request)
-    {
-        $municipio_id = $request->municipio_id;
-        $sucursales = $this->sucursalM->where('municipio_id', $municipio_id)->get();
-        return view('forms._listSucursal', compact('sucursales'));
     }
 
     public function editRegistro (Registro $registro)
@@ -98,7 +80,7 @@ class GeneralController extends Controller
             $registro_id = $request->get('registro_id');
             $municipio_id = $this->registroM->find($registro_id)->municipio_id;
             $municipioNombre = $this->municipioM->find($municipio_id)->nombre;
-            $folio = $this->registroM->find($registro_id)->folio; 
+            $folio = $this->registroM->find($registro_id)->folio;
             if ($request->file('entradaSalida') !==null) {
                 $tipo_id = $listTipoEvi['entrada y salida'];
                 $files = $request->file('entradaSalida');
@@ -135,7 +117,7 @@ class GeneralController extends Controller
 
             $municipios = $this->municipioM->getAll();
             $evidencias = $registro->evidencias->where('tipo_id', $tipo_id);
-            $view = view('lists._fileList', compact('evidencias'))->render(); 
+            $view = view('lists._fileList', compact('evidencias'))->render();
             return response()->json(
                 [
                     'type' => 'view',
@@ -154,7 +136,7 @@ class GeneralController extends Controller
     {
         if (Auth::user()->tipoUsuario == 1) {
             $calendarioAll = $this->calendarioM->getAll();
-            $view = view('lists._calendarioList', compact('calendarioAll')); 
+            $view = view('lists._calendarioList', compact('calendarioAll'));
             return response()->json(
                 [
                     'type' => 'view',
@@ -171,7 +153,7 @@ class GeneralController extends Controller
         if (Auth::user()->tipoUsuario == 1) {
             $this->calendarioM->guardar($request->all());
             $calendarioAll = $this->calendarioM->getAll();
-            $view = view('lists._calendarioList', compact('calendarioAll'))->render(); 
+            $view = view('lists._calendarioList', compact('calendarioAll'))->render();
             return response()->json(
                 [
                     'type' => 'view',
@@ -200,8 +182,8 @@ class GeneralController extends Controller
             }
             $result = $evidencia->eliminar();
             $evidencias = $this->evidenciaM->where('registro_id', $registro_id)->where('tipo_id', $tipo_id)->get();
-            
-            $view = view('lists._fileList', compact('evidencias'))->render(); 
+
+            $view = view('lists._fileList', compact('evidencias'))->render();
             return response()->json(
                 [
                     'type' => 'view',
@@ -220,7 +202,7 @@ class GeneralController extends Controller
         if (Auth::user()->tipoUsuario == 1) {
             $result = $registro->eliminar();
             $modelList = $this->registroM->getAll();
-            $view = view('admin._loadTable', compact('modelList'))->render(); 
+            $view = view('admin._loadTable', compact('modelList'))->render();
             return response()->json(
                 [
                     'type' => 'view',
@@ -262,7 +244,7 @@ class GeneralController extends Controller
             $registro_id = $request->get('registro_id');
             $municipio_id = $this->registroM->find($registro_id)->municipio_id;
             $municipioNombre = $this->municipioM->find($municipio_id)->nombre;
-            $folio = $this->registroM->find($registro_id)->folio; 
+            $folio = $this->registroM->find($registro_id)->folio;
             if ($request->file('entradaSalida') !==null) {
                 $tipo_id = $listTipoEvi['entrada y salida'];
                 $files = $request->file('entradaSalida');
@@ -299,7 +281,7 @@ class GeneralController extends Controller
 
             // $evidencias = $this->evidenciaM->getMy($registro_id, $tipo_id);
 
-            // $view = view('lists._fileList', compact('evidencias'))->render(); 
+            // $view = view('lists._fileList', compact('evidencias'))->render();
             return response()->json(
                 [
                     // 'type' => 'view',
@@ -318,47 +300,47 @@ class GeneralController extends Controller
         $responseDownload = null;
 
         $registroFolio = $registro->folio;
-        
+
         $evidencias = $registro->evidencias;
 
         //Nombre aleatorio de la carpeta
         $randomString = str_random(40);
-            
+
         // Carpeta raiz donde se copiaran los archivos
         $toFolder = "temp/$randomString";
 
         // Carpeta raiz donde se generaran nuestros zips
         $rootFolderZip = 'temp/zips/';
-        
+
         // Creamos la carpeta root del zip en caso de que no exista
         Storage::disk('local')->makeDirectory($rootFolderZip);
-        
+
         // Carpeta y nombre del zip donde se va a crear
         $folderZip = Storage::disk('local')->path("$rootFolderZip/$registroFolio.zip");
 
         foreach ($evidencias as $evidencia) {
 
             $evidenciaNombre = $evidencia->nombre;
-            
+
             $evidenciaPath = $evidencia->path;
 
             $evidenciaTipo = $evidencia->tipoEvidencia->nombre;
-            
+
             // Carpeta raiz de los archivos que se vana copiar
             $fileCopy = "public/$evidenciaPath";
-            
+
             // Nombre del archivo zip
             $zipFileName = "$registroFolio.zip";
-            
+
             // Se copio el archivo?
             $statusFileCp = Storage::disk('local')->copy($fileCopy, "$toFolder/$evidenciaNombre");
-            
+
             // full path del archivo copiado
             $fullPathCopyFile = Storage::disk('local')->path("$toFolder/$evidenciaNombre");
-            
+
             //instancia
             $zip = new ZipArchive;
-            
+
             if ($zip->open($folderZip, ZipArchive::CREATE) === TRUE) {
 
                 $zip->addFile($fullPathCopyFile, "$evidenciaTipo/$evidenciaNombre");
@@ -367,7 +349,7 @@ class GeneralController extends Controller
             }
 
         }
-        
+
         // Eliminamos la carpeta que se copio
         $statusFileDl = Storage::disk('local')->deleteDirectory($toFolder);
 
