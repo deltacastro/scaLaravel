@@ -71,6 +71,7 @@
                 "lengthChange": false,
                 "responsive": true,
                 "info": false,
+                "order": [[0, 'desc']]
                 "language": {
                     "paginate": {
                         "next": "Siguiente",
