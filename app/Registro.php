@@ -102,9 +102,9 @@ class Registro extends Model
     public function getAll() {
         $estadousuario = \Auth::user()->estado_id;
         if($estadousuario == 0){
-            return $this->whereYear('created_at', '2024')->orderBy('created_at', 'desc')->get();
+            return $this->whereYear('fechaInicio', '2024')->orderBy('fechaInicio', 'desc')->get();
         }else{
-            return $this->whereYear('created_at', '2024')->orderBy('created_at', 'desc')->where('estado_id', $estadousuario)->get();
+            return $this->whereYear('fechaInicio', '2024')->orderBy('fechaInicio', 'desc')->where('estado_id', $estadousuario)->get();
         }
     }
 
